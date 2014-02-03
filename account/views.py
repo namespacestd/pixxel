@@ -26,7 +26,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                return HttpResponse('Success')
+                return HttpResponseRedirect('/')
             else:
                 error_msg = 'Your account has been disabled.'
         else:
@@ -51,7 +51,7 @@ def create(request):
                 new_account = UserAccount.find(form.cleaned_data['username'])
                 logger.info('User Create successful. User: %s', new_account)
 
-                return HttpResponse('Success') 
+                return HttpResponseRedirect('/') 
             else:
                 logger.error('User Create failed. Invalid form.')
                 raise Exception(form.errors.as_ul())
