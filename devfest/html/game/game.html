@@ -12,4 +12,8 @@
         <input type="text" name="room_name" placeholder="Room Name" required></input>
         <input type="submit" value="Create Room"></input>
     </form>
+
+    {% if error %}
+        A game room with that name already exists.
+    {% endif %}
 {% endblock %}

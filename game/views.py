@@ -7,7 +7,10 @@ def new_game(request):
 def create_new_room(request):
     if request.method == 'POST':
         game_name = request.POST['room_name']
-
+        
+        if GameInstance.get(game_name):
+            return render(request, 'game/game.html', { 'error' : 'already exists' })
+            
         new_game = GameInstance()
         new_game.game_room_name = game_name
         current_user = UserAccount.get(request.user)
