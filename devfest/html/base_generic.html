@@ -1,0 +1,23 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MY LITTLE TITLE CAN'T POSSIBLY BE THIS TEMPORARY</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}" />
+    <link href='http://fonts.googleapis.com/css?family=Raleway:100,200' rel='stylesheet' type='text/css'>
+    
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans|Michroma' rel='stylesheet' type='text/css'>
+
+    {% block css %}{% endblock %}
+</head>
+<body>
+    {% include "main/menu.html" %}
+    
+    {% block content %}{% endblock %}
+
+    {% block js %}{% endblock %}
+</body>
+</html>

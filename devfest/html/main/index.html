@@ -1,13 +1,18 @@
+
+{% extends "base_generic.html" %}
 {% load staticfiles %}
 
-<!doctype html>
-<html>
-    <head>
-        <title> MY LITTLE TITLE CAN'T POSSIBLY BE THIS TEMPORARY </title>
-        <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
-        
-    </head>
-    <body>
-        <div id="one"> SOME DIV </div>
-    </body>
-</html>
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
+{% endblock %}
+
+{% block content %}
+    <div id="game_menu">
+        <div id="start_new_game"> Start New Game </div>
+
+        <div id="join_game"> Join Game </div>
+    </div>
+    <div id="current_games">
+
+    </div>
+{% endblock %}

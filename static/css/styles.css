@@ -1,8 +1,42 @@
 
 body {
-    background-color: blue;
+    font:20px 'Raleway', serif;
+    font-weight: 100;
 }
 
 #one {
-    background-color: red; 
+    background-color: red;
+    width: 50%; 
+}
+
+#title {
+    font-size: 50px;
+    width: 25%;
+    float: left;
+}
+
+.menu_button {
+    float: right;
+    border: 2px solid black;
+    margin-right: 5px;
+    font-size: 20px;
+}
+#menu {
+    border-bottom: 2px solid black;
+    height: 60px;
+}
+
+#start_new_game, #join_game {
+    font-size: 75px;
+    border: 2px solid black;
+    border-radius: 20px;
+    display: inline-block; 
+    padding: 15px;
+    margin: 25px;
+}
+
+#game_menu {
+    width: 50%;
+    text-align: center;
+    margin-top: 175px;
 }
