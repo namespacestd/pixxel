@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'devfest',
     'home',
+    'game',
 )
 
 # These functions are executed upon the rendering of every page. So if something needs to be added

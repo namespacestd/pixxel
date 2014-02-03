@@ -1,0 +1,4 @@
+
+*.pyc
+local.sqlite
+log.log

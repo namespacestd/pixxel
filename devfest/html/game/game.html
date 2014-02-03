@@ -1,0 +1,15 @@
+
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
+{% endblock %}
+
+{% block content %}
+    <form action="/game/create_new_room" method="post">
+        {% csrf_token %}
+        <input type="text" name="room_name" placeholder="Room Name" required></input>
+        <input type="submit" value="Create Room"></input>
+    </form>
+{% endblock %}
