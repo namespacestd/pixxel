@@ -1,4 +1,9 @@
 
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
 body {
     font:20px 'Raleway', serif;
     font-weight: 100;
@@ -40,11 +45,27 @@ body {
 #game_menu {
     width: 50%;
     text-align: center;
-    margin-top: 175px;
+    margin-top: 130px;
+    float: left;
 }
 
 #user_panel {
     float: right;
     line-height: 60px;
     font-size: 35px;
+}
+
+#current_games {
+    float: right;
+    text-align: center;
+    margin: 45px 25px;
+}
+
+.content_title {
+    font-size: 35px;
+}
+
+.game_entry {
+    font-size: 25px;
+    margin: 10px 0;
 }

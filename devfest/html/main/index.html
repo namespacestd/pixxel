@@ -7,12 +7,17 @@
 {% endblock %}
 
 {% block content %}
-    <div id="game_menu">
-        <a href="/game/new_game"><div id="start_new_game"> Start New Game </div></a>
+    <div id="content">
+        <div id="game_menu">
+            <a href="/game/new_game"><div id="start_new_game"> Start New Game </div></a>
 
-        <div id="join_game"> Join Game </div>
-    </div>
-    <div id="current_games">
-
+            <div id="join_game"> Join Game </div>
+        </div>
+        <div id="current_games">
+            <div class="content_title"> Current Games </div>
+            {% for game in current_games %}
+                <div class="game_entry"> {{ game.game_room_name }} </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

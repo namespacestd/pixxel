@@ -7,6 +7,19 @@ class UserAccount(models.Model):
     email_address = models.EmailField()
 
     @staticmethod
+    def get(user):
+        # If parameter is empty, return nothing
+        if user is None or not user.username:
+            return None
+
+        # Check if profile exists, and return it if it does
+        results = UserAccount.objects.filter(user=user)
+        try:
+            return results[0]
+        except IndexError:
+            return None
+
+    @staticmethod
     def find(username):
         matches = UserAccount.objects.filter(user__username__iexact=username)
         if len(matches):
