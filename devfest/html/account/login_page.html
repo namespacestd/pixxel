@@ -1,0 +1,32 @@
+
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
+{% endblock %}
+
+{% block content %}
+    <form id="loginForm" method="post" action="/account/login/">
+        {% csrf_token %}
+        <h1>Login</h1>
+        <table>
+            <tr>
+                <td><label>{{ login_form.username.label_tag }}:</label></td>
+                <td><label>{{ login_form.username }}</label></td>
+            </tr>
+            <tr>
+                <td>{{ login_form.password.label_tag }}:</td>
+                <td>{{ login_form.password }}</td>
+            </tr>
+        </table>
+        <div class="centered-text top-margin">
+            <button type="submit">Log In</button>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}" />
+
+        <div class="error top-margin"></div>
+
+    </form>    
+
+{% endblock %}

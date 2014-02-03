@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
+from devfest.models import CreateAccountForm
 
 def authentication_info(request):
     '''
@@ -18,5 +19,8 @@ def authentication_info(request):
     }'''
 
     return {
-
+        'login_form': AuthenticationForm(),
+        'signup_form': CreateAccountForm(),
+        'is_authenticated': request.user.is_active and request.user.is_authenticated(),
+        'username': request.user.username,
     }

@@ -20,6 +20,8 @@ body {
     border: 2px solid black;
     margin-right: 5px;
     font-size: 20px;
+    margin-top: 15px;
+    margin-left: 25px;
 }
 #menu {
     border-bottom: 2px solid black;
@@ -39,4 +41,10 @@ body {
     width: 50%;
     text-align: center;
     margin-top: 175px;
+}
+
+#user_panel {
+    float: right;
+    line-height: 60px;
+    font-size: 35px;
 }

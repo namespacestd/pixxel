@@ -13,6 +13,7 @@ urlpatterns = patterns(
     '',
     url(r'^$', 'home.views.index', name='index'),    # Root url for application
     url(r'^game/', include('game.urls')),
+    url(r'^account/', include('account.urls')),
     # Static content goes under the '/site_media/' directory
     # url (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 
