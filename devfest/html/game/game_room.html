@@ -7,5 +7,19 @@
 {% endblock %}
 
 {% block content %}
-    {{ game_room }}
+    <div class="content">
+        <div class="section_title"> Room: {{ room_name }} </div>
+        {% if not already_in_game %}
+            <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Join Room"> </input>
+            </form>
+        {% endif %}
+        <div id="current_room_users">
+            <div class="content_title"> Current Users </div>
+            {% for user in userlist %}
+                <div class="game_entry"> {{ user.user.username }} </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

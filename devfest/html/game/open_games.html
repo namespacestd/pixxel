@@ -1,0 +1,16 @@
+
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="section_title"> Open Games </div>
+        {% for game in open_games %}
+            <a href="/game/room/{{game.game_room_name}}"><div class="open_game_item"> {{ game.game_room_name }}</div></a>
+        {% endfor %}
+    </div>
+{% endblock %}

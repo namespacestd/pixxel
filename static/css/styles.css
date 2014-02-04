@@ -1,4 +1,8 @@
 
+a {
+    text-decoration: none;
+}
+
 a:visited {
     text-decoration: none;
     color: inherit;
@@ -67,5 +71,23 @@ body {
 
 .game_entry {
     font-size: 25px;
+    margin: 10px auto;
+}
+.section_title {
+    font-size: 40px;
+    text-align: center;
     margin: 10px 0;
+}
+
+#current_room_users {
+    width: 300px;
+    text-align: center;
+}
+#join_room_button {
+    text-align: center;
+}
+
+.open_game_item {
+    font-size: 30px;
+    text-align: center;
 }
