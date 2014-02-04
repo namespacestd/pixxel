@@ -1,27 +1,20 @@
-
 {% extends "base_generic.html" %}
 {% load staticfiles %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
-{% endblock %}
-
 {% block content %}
-    <div id="content">
-        <div id="game_menu">
-            {% if not is_authenticated %}
-                Please Login to Create/Join Games
-            {% else %}
-                <a href="/game/new_game"><div id="start_new_game"> Start New Game </div></a>
-
-                <a href="/game/open_games"><div id="join_game"> Join Game </div></a>
-            {% endif %}
+    {% if not is_authenticated %}
+        <div id="intro-wrapper">
+            <div id="intro-header">
+                PixxeL
+            </div>
+            <a class="intro-button" href="/account/login_page">Login</a>
+            <a class="intro-button" href="/account/create_account">Sign Up</a>
+            <div id="intro-footer">
+                Pixxel is a multiplayer drawing game where you compete against your friends.
+                <br>Created for DevFest 2014 at Columbia University.
+            </div>
         </div>
-        <div id="current_games">
-            <div class="content_title"> Current Games </div>
-            {% for game in current_games %}
-                <a href="/game/room/{{game.game_room_name}}/"><div class="game_entry"> {{ game.game_room_name }} </div></a>
-            {% endfor %}
-        </div>
-    </div>
+    {% else %}
+        Dashboard when logged in.
+    {% endif %}
 {% endblock %}

@@ -1,0 +1,45 @@
+body {
+    background: url('../img/bg.png');
+}
+
+#intro-wrapper {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#intro-header {
+    font-family: 'Kaushan Script';
+    font-size: 120px;
+    color: #BADCE3;
+    text-shadow: 3px 3px 5px black;
+    margin-top: 100px;
+    padding-right: 30px;
+}
+
+.intro-button {
+    display: inline-block;
+    width: 150px;
+    padding: 10px;
+    font-family: 'Belgrano';
+    font-size: 16px;
+    text-decoration: none;
+    color: black;
+    border: 1px solid #111;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(#A0C6F2, #456C99);
+    background-size: auto 200%;
+    background-position: 0 100%;
+    transition: background-position 0.33s;
+}
+.intro-button:hover {
+    background-position: 0 0;
+    cursor: pointer;
+}
+
+#intro-footer {
+    margin: 75px 0 125px;
+    font-family: 'Belgrano';
+    font-size: 12px;
+    color: #ccc;
+}
