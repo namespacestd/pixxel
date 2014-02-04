@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from devfest.models import GameInstance, UserAccount, ScoreInstance
+from devfest.models import GameInstance, UserAccount, ScoreInstance, DrawInstance
 
 def new_game(request):
     return render(request, 'game/game.html')
@@ -36,15 +36,22 @@ def game_room(request, room_name):
         already_in_game = UserAccount.get(request.user) in userlist
 
     user_scores = []
+    user_drawings = []
 
     for user in userlist:
         user_scores.append(({'username' : user.user.username, 'score': ScoreInstance.get(user, current_room)})) 
         print user.user.username
 
+    for user in userlist:
+        if user != current_room.current_judge:
+            user_drawings.append({'username': user.user.username, 'drawing': DrawInstance.get(user, current_room, current_room.current_round)})
+
     return render(request, 'game/game_room.html', { 
         'game_instance' : current_room,
         'room_name' : room_name, 
         'userlist' : user_scores,
+        'num_drawing' : len(userlist)-1,
+        'user_drawings' :  user_drawings,
         'already_in_game' : already_in_game
     })
 

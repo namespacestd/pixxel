@@ -22,5 +22,21 @@
                 <div class="game_entry"> {{ user.username }} ({{ user.score.score }}) </div>
             {% endfor %}
         </div>
+
+        <div>
+            People Drawing: {{ num_drawing }}
+            {% for drawing in user_drawings %}
+                <div class="user_drawing">
+                    {{ drawing.username }} 
+                    <div class="drawing_image">
+                        {% if drawing.drawing %}
+                            {{ drawing.drawing }}
+                        {% else %}
+                            Blank_image.png
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

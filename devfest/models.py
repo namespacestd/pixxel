@@ -41,6 +41,7 @@ class GameInstance(models.Model):
     game_room_name = models.CharField(max_length=50)
     users = models.ManyToManyField(UserAccount, related_name='game_instance_user')
     current_judge = models.ForeignKey(UserAccount, related_name='game_instance_judge')
+    current_round = models.IntegerField(default=0)
 
     @staticmethod
     def get(name):
@@ -70,6 +71,25 @@ class ScoreInstance(models.Model):
 
         # Check if profile exists, and return it if it does
         results = ScoreInstance.objects.filter(user=user, game=game)
+        try:
+            return results[0]
+        except IndexError:
+            return None
+
+class DrawInstance(models.Model):
+    user = models.ForeignKey(UserAccount)
+    picture = models.ImageField(upload_to="static/img/user_pictures/")
+    game = models.ForeignKey(GameInstance)
+    round_number = models.IntegerField()
+
+    @staticmethod
+    def get(user, game, round_number):
+        # If parameter is empty, return nothing
+        if user is None or game is None or round_number is None:
+            return None
+
+        # Check if profile exists, and return it if it does
+        results = DrawInstance.objects.filter(user=user, game=game, round_number=round_number)
         try:
             return results[0]
         except IndexError:
