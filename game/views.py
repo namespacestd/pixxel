@@ -17,7 +17,7 @@ def create_new_room(request):
         new_game.current_judge = current_user
         new_game.save()
         new_game.users.add(current_user)
-
+        return HttpResponseRedirect('/game/room/'+game_name)
     
     return render(request, 'game/game.html')
 
