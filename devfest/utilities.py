@@ -24,7 +24,8 @@ class AppInitialization():
         if settings.AUTOLOAD_TESTING_DATA:
             if not User.objects.count():
                 logger.info('Loading initial data since AUTOLOAD_TESTING_DATA is set to true...')
-                
+        
+        """
         # Ensure super user exists.
         if settings.AUTOLOAD_ADMIN_ACCOUNT:
             su = User.objects.filter(username='ase1')
@@ -35,5 +36,5 @@ class AppInitialization():
                 logger.info('Creating initial superuser since AUTOLOAD_ADMIN_ACCOUNT is set to true...')
                 su = UserAccount.create_new_user('devfest', '', 'password123')
                 su.user.is_superuser = True
-                su.user.save()
+                su.user.save()"""
 

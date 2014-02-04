@@ -38,7 +38,7 @@ class UserAccount(models.Model):
 
 
 class GameInstance(models.Model):
-    game_room_name = models.CharField(max_length=50, unique=True)
+    game_room_name = models.CharField(max_length=50)
     users = models.ManyToManyField(UserAccount, related_name='game_instance_user')
     current_judge = models.ForeignKey(UserAccount, related_name='game_instance_judge')
 
@@ -61,6 +61,20 @@ class ScoreInstance(models.Model):
     user = models.ForeignKey(UserAccount)
     score = models.IntegerField(default=0)
     game = models.ForeignKey(GameInstance)
+
+    @staticmethod
+    def get(user, game):
+        # If parameter is empty, return nothing
+        if user is None or game is None:
+            return None
+
+        # Check if profile exists, and return it if it does
+        results = ScoreInstance.objects.filter(user=user, game=game)
+        try:
+            return results[0]
+        except IndexError:
+            return None
+
 
 class CreateAccountForm(forms.Form):
     """
