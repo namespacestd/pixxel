@@ -9,9 +9,13 @@
 {% block content %}
     <div id="content">
         <div id="game_menu">
-            <a href="/game/new_game"><div id="start_new_game"> Start New Game </div></a>
+            {% if not is_authenticated %}
+                Please Login to Create/Join Games
+            {% else %}
+                <a href="/game/new_game"><div id="start_new_game"> Start New Game </div></a>
 
-            <a href="/game/open_games"><div id="join_game"> Join Game </div></a>
+                <a href="/game/open_games"><div id="join_game"> Join Game </div></a>
+            {% endif %}
         </div>
         <div id="current_games">
             <div class="content_title"> Current Games </div>
