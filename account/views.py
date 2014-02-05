@@ -26,11 +26,11 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponse('Success')
             else:
                 error_msg = 'Your account has been disabled.'
         else:
-            error_msg = "Your username and password didn't match. Please try again."
+            error_msg = "Incorrect username/password combination. Please try again."
 
         logger.info('Login failed. User: %s, Reason: %s', username, error_msg)
         return HttpResponse(error_msg)
@@ -51,13 +51,14 @@ def create(request):
                 new_account = UserAccount.find(form.cleaned_data['username'])
                 logger.info('User Create successful. User: %s', new_account)
 
-                return HttpResponseRedirect('/') 
+                return HttpResponse('Success')
             else:
                 logger.error('User Create failed. Invalid form.')
                 raise Exception(form.errors.as_ul())
         except Exception as ex:
             logger.error('User Create failed. Validation or Authentication failed.')
-            return render(request, "account/new_account.html", { 'errors' : ex.message })
+            #return render(request, "account/new_account.html", { 'errors' : ex.message })
+            return HttpResponse(ex.message)
     else:
         logger.error('User Create failed. Invalid form submission.')
         return HttpResponse('Account creation failed.')

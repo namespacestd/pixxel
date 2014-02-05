@@ -100,6 +100,7 @@ class CreateAccountForm(forms.Form):
     """
     Account creation form, including username, password and email address.
     """
+    email_address = forms.CharField(label="Email address")  # TODO: change to regexfield
     username = forms.RegexField(
         label="Username",
         max_length=30,
@@ -119,7 +120,6 @@ class CreateAccountForm(forms.Form):
         max_length=30,
         widget=forms.PasswordInput,
         help_text="Enter the same password as above, for verification.")
-    email_address = forms.CharField(label="Email address")  # TODO: change to regexfield
 
     def clean_username(self):
         username = self.cleaned_data["username"]
