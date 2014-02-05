@@ -3,10 +3,12 @@ $(document).ready(function() {
     // Click login button
     $('#login-btn').click(function(e) {
         e.preventDefault();
-        $('#signup-form-wrapper').fadeOut(300);
-        setTimeout(function() {
-            $('#login-form-wrapper').fadeIn(300);
-        }, 300);
+        $('#signup-btn').addClass('unclickable');
+        $('#signup-form-wrapper').fadeOut(250, function() {
+            $('#login-form-wrapper').fadeIn(250, function() {
+                $('#signup-btn').removeClass('unclickable');
+            });
+        });
         $('#signup-btn').removeClass('disabled').addClass('enabled');
         $(this).removeClass('enabled').addClass('disabled');
     });
@@ -14,10 +16,12 @@ $(document).ready(function() {
     // Click signup button
     $('#signup-btn').click(function(e) {
         e.preventDefault();
-        $('#login-form-wrapper').fadeOut(300);
-        setTimeout(function() {
-            $('#signup-form-wrapper').fadeIn(300);
-        }, 300);
+        $('#login-btn').addClass('unclickable');
+        $('#login-form-wrapper').fadeOut(250, function() {
+            $('#signup-form-wrapper').fadeIn(250, function() {
+                $('#login-btn').removeClass('unclickable');
+            });
+        });
         $('#login-btn').removeClass('disabled').addClass('enabled');
         $(this).removeClass('enabled').addClass('disabled');
     });
