@@ -144,3 +144,5 @@ class CreateAccountForm(forms.Form):
         email_address = self.cleaned_data.get("email_address")
         username = self.cleaned_data.get('username')
         return UserAccount.create_new_user(username, email_address, password)
+
+

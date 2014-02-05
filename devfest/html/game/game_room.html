@@ -24,19 +24,32 @@
         </div>
 
         <div>
-            People Drawing: {{ num_drawing }}
-            {% for drawing in user_drawings %}
-                <div class="user_drawing">
-                    {{ drawing.username }} 
-                    <div class="drawing_image">
-                        {% if drawing.drawing %}
-                            {{ drawing.drawing }}
-                        {% else %}
-                            Blank_image.png
-                        {% endif %}
+            {% if is_current_judge %}
+                People Drawing: {{ num_drawing }}
+                {% for drawing in user_drawings %}
+                    <div class="user_drawing">
+                        {{ drawing.username }} 
+                        <div class="drawing_image">
+                            {% if drawing.drawing %}
+                                <img src="/{{drawing.drawing.picture}}"> </img>
+                            {% else %}
+                                Blank_image.png
+                            {% endif %}
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% else %}
+                {% if not user_drawing %}
+                    Draw Here
+                    <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input name="drawn_image" type="file" required> </input>
+                        <input type="submit" value="Submit"> </input>
+                    </form>
+                {% else %}
+                    Your Drawing is Beautiful.
+                {% endif %}    
+            {% endif %}
         </div>
     </div>
 {% endblock %}
