@@ -8,4 +8,6 @@ urlpatterns = patterns('',
     url(r'^room/(?P<room_name>\w+)/+$', views.game_room, name='game_room'),
     url(r'^room/join_game/(?P<room_name>\w+)/+$', views.join_game, name='join_game'),
     url(r'^submit_drawing/(?P<room_name>\w+)/+$', views.submit_drawing, name='submit_drawing'),
+    url(r'^judge_drawing/(?P<room_name>\w+)/+$', views.judge_drawing, name='judge_drawing'),
+    url(r'^next_round/(?P<room_name>\w+)/+$', views.next_round, name='next_round'),
 )

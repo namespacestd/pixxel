@@ -57,11 +57,11 @@ class GameInstance(models.Model):
             return None
 
 
-
 class ScoreInstance(models.Model):
     user = models.ForeignKey(UserAccount)
     score = models.IntegerField(default=0)
     game = models.ForeignKey(GameInstance)
+    seen_previous_result = models.BooleanField(default=True)
 
     @staticmethod
     def get(user, game):
@@ -76,11 +76,21 @@ class ScoreInstance(models.Model):
         except IndexError:
             return None
 
+    @staticmethod
+    def get_all_for_game(game):
+        if game is None:
+            return None
+
+        results = ScoreInstance.objects.filter(game=game)
+        return results
+
 class DrawInstance(models.Model):
-    user = models.ForeignKey(UserAccount)
+    user = models.ForeignKey(UserAccount, related_name='draw_instance_user')
     picture = models.ImageField(upload_to="static/img/user_pictures/")
     game = models.ForeignKey(GameInstance)
     round_number = models.IntegerField()
+    was_round_winner = models.BooleanField(default=False)
+    round_judge = models.ForeignKey(UserAccount,related_name='draw_instance_judge')
 
     @staticmethod
     def get(user, game, round_number):
@@ -94,6 +104,14 @@ class DrawInstance(models.Model):
             return results[0]
         except IndexError:
             return None
+
+    @staticmethod
+    def get_all_for_round(game, round_number):
+        if game is None or round_number is None:
+            return None
+            
+        results = DrawInstance.objects.filter(game=game, round_number=round_number)
+        return results
 
 
 class CreateAccountForm(forms.Form):

@@ -24,31 +24,54 @@
         </div>
 
         <div>
-            {% if is_current_judge %}
-                People Drawing: {{ num_drawing }}
-                {% for drawing in user_drawings %}
-                    <div class="user_drawing">
-                        {{ drawing.username }} 
-                        <div class="drawing_image">
-                            {% if drawing.drawing %}
-                                <img src="/{{drawing.drawing.picture}}"> </img>
-                            {% else %}
-                                Blank_image.png
-                            {% endif %}
-                        </div>
-                    </div>
+            {% if previous_round_data %}
+                Round Results <br/>
+                {% for drawing in previous_round_data %}
+                    {{ drawing.user.user.username }}
+                    <img src="/{{drawing.picture}}"></img>
+                    {% if drawing.was_round_winner %}
+                        THIS DRAWING WAS THE WINRAR
+                    {% endif %}
+                    <a href="/game/next_round/{{room_name}}/">Go to Next Round</a>
+                    <br/>
                 {% endfor %}
             {% else %}
-                {% if not user_drawing %}
-                    Draw Here
-                    <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
+                {% if is_current_judge %}
+                    People Drawing: {{ num_drawing }}
+
+                    <form action="/game/judge_drawing/{{room_name}}/" method="post">
                         {% csrf_token %}
-                        <input name="drawn_image" type="file" required> </input>
-                        <input type="submit" value="Submit"> </input>
+                        {% for drawing in user_drawings %}
+                            <div class="user_drawing">
+                                {{ drawing.username }} 
+                                <div class="drawing_image">
+                                    {% if drawing.drawing %}
+                                        <img src="/{{drawing.drawing.picture}}"> </img>
+                                    {% else %}
+                                        Blank_image.png
+                                    {% endif %}
+
+                                    {% if all_submitted %}
+                                        <input type="submit" name="{{drawing.username}}" value="Choose this Drawing"></input>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </form>
                 {% else %}
-                    Your Drawing is Beautiful.
-                {% endif %}    
+                    {% if already_in_game %}
+                        {% if not user_drawing %}
+                            Draw Here
+                            <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input name="drawn_image" type="file" required> </input>
+                                <input type="submit" value="Submit"> </input>
+                            </form>
+                        {% else %}
+                            Your Drawing is Beautiful.
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
             {% endif %}
         </div>
     </div>
