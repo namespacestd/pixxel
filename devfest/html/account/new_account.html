@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block content %}
-    <form id="signupForm" method="post" action="/account/create/">
+   
+ <form id="signupForm" method="post" action="/account/create/">
         {% csrf_token %}
 
         <h1>Sign Up</h1>
@@ -34,7 +35,6 @@
         <div class="centered-text top-margin">
             <button type="submit">Sign Up</button>
         </div>
-
         <div class="error top-margin"></div>
     </form>
 

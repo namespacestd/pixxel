@@ -7,14 +7,64 @@
             <div id="intro-header">
                 PixxeL
             </div>
-            <a class="intro-button" href="/account/login_page">Login</a>
-            <a class="intro-button" href="/account/create_account">Sign Up</a>
-            <div id="intro-footer">
+            <div id="intro-desc">
                 Pixxel is a multiplayer drawing game where you compete against your friends.
                 <br>Created for DevFest 2014 at Columbia University.
             </div>
+            <a class="intro-button enabled" id="login-btn">Log In</a>
+            <a class="intro-button enabled" id="signup-btn">Sign Up</a>
+            <div id="login-form-wrapper">
+                <form id="login-form" method="post" action="/account/login/">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td><label>{{ login_form.username.label_tag }}:</label></td>
+                            <td>{{ login_form.username }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>{{ login_form.password.label_tag }}:</label></td>
+                            <td>{{ login_form.password }}</td>
+                        </tr>
+                    </table>
+                    <input type="submit" class="button" value="Submit">
+                    <div class="error"></div>
+                </form>
+            </div>
+            <div id="signup-form-wrapper">
+                <form id="signup-form" method="post" action="/account/create/">
+                    {% csrf_token %}
+
+                    <table>
+                        <tr>
+                            <td><label>E-mail address:</label></td>
+                            <td>{{ signup_form.email_address }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Username:</label></td>
+                            <td>{{ signup_form.username }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Password:</label></td>
+                            <td>{{ signup_form.password1 }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Confirm password:</label></td>
+                            <td>{{ signup_form.password2 }}</td>
+                        </tr>
+                    </table>
+                    <input type="submit" class="button" value="Submit">
+                    <div class="error"></div>
+                </form>
+            </div>
+
+    {{ errors }}
         </div>
     {% else %}
         Dashboard when logged in.
+        <br><a href="/account/logout/">Logout</a>
     {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/intro.js"></script>
 {% endblock %}
