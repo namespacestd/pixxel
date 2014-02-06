@@ -101,6 +101,13 @@ def join_game_helper(user_account, room_name):
     user_score = ScoreInstance(user=current_user, score=0, game=current_room)
     user_score.save()
 
+def judge_phrase(request, room_name):
+    current_room = GameInstance.get(room_name)
+    phrase = request.POST['judge_phrase']
+    current_room.current_phrase = phrase
+    current_room.save()
+    return HttpResponseRedirect('/game/room/' + room_name)
+
 def submit_drawing(request, room_name):
     current_user = UserAccount.get(request.user)
     current_room = GameInstance.get(room_name)
@@ -128,6 +135,7 @@ def judge_drawing(request, room_name):
             user.save()
 
         game_room.current_round+=1
+        game_room.current_phrase=None
         game_room.save()
         draw_instance.was_round_winner = True
         draw_instance.save()
