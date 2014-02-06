@@ -6,6 +6,7 @@ $(document).ready(function() {
         $('#signup-btn').addClass('unclickable');
         $('#signup-form-wrapper').fadeOut(250, function() {
             $('#login-form-wrapper').fadeIn(250, function() {
+                $("input:text:visible:first").focus();
                 $('#signup-btn').removeClass('unclickable');
             });
         });
@@ -19,6 +20,7 @@ $(document).ready(function() {
         $('#login-btn').addClass('unclickable');
         $('#login-form-wrapper').fadeOut(250, function() {
             $('#signup-form-wrapper').fadeIn(250, function() {
+                $("input:text:visible:first").focus();
                 $('#login-btn').removeClass('unclickable');
             });
         });

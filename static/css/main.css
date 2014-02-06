@@ -1,5 +1,6 @@
 body {
     background: url('../img/bg.png');
+    margin: 0;
 }
 
 /*=========
@@ -24,6 +25,15 @@ body {
 .button:hover {
     background-position: 0 0;
     cursor: pointer;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    color: #ccc;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: normal;
 }
 
 /*============
@@ -112,9 +122,117 @@ body {
     content: ' » ';
 }
 
+/*========
+   header
+  ========*/
+#header-outer {
+    height: 60px;
+    background-color: rgba(60,120,220,0.2);
+    box-shadow: 0 0 5px black;
+}
+#header-inner {
+    width: 800px;
+    margin: 0 auto;
+}
+#header-left {
+    float: left;
+    padding-top: 3px;
+}
+#header-right {
+    float: right;
+    padding-top: 13px;
+}
+.logo, .logo:visited, .logo:active {
+    text-decoration: none;
+    color: #BADCE3;
+    font-family: 'Kaushan Script';
+    font-size: 36px;
+    text-shadow: 1px 1px 3px black;
+    transition: 0.33s;
+}
+.logo:hover {
+    color: #eee;
+}
+
+/*===========
+   main page
+  ===========*/
+#main {
+    width: 800px;
+    margin: 0 auto;
+}
+#main-left {
+    float: left;
+    width: 430px;
+    margin-top: 45px;
+    margin-right: 10px;
+    text-align: center;
+}
+#main-right {
+    float: right;
+    width: 270px;
+    margin-top: 35px;
+    margin-right: 50px;
+}
+.notice {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    color: #ccc;
+    font-style: italic;
+    text-align: center;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+    padding: 15px;
+}
+#games-list {
+    margin-top: 10px;
+}
+.games-list-game {
+    text-align: left;
+    font-size: 14px;
+    margin: 5px 0;
+    padding: 10px;
+    line-height: 175%;
+    font-family: 'Open Sans';
+    color: #ccc;
+    background-color: rgba(120,120,120,0.1);
+    border: 1px solid #111;
+    transition: 0.33s;
+}
+.games-list-game:hover {
+    box-shadow: 0 0 5px black;
+    cursor: pointer;
+    background-color: rgba(220,220,220,0.1);
+}
+.big-button {
+    display: inline-block;
+    padding: 25px 0;
+    width: 300px;
+    font-family: 'Belgrano';
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    border: 1px solid #111;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(#A0C6F2, #456C99);
+    background-size: auto 200%;
+    background-position: 0 100%;
+    transition: background-position 0.33s;
+    outline: none;
+}
+.big-button:hover {
+    background-position: 0 0;
+    cursor: pointer;
+}
+
 /*===============
    miscellaneous
   ===============*/
 .unclickable {
     pointer-events: none;
+}
+.clear {
+    clear: both;
 }
