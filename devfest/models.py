@@ -39,9 +39,13 @@ class UserAccount(models.Model):
 
 class GameInstance(models.Model):
     game_room_name = models.CharField(max_length=50)
+    owner = models.ForeignKey(UserAccount, related_name='game_instance_owner')
     users = models.ManyToManyField(UserAccount, related_name='game_instance_user')
     current_judge = models.ForeignKey(UserAccount, related_name='game_instance_judge')
     current_round = models.IntegerField(default=0)
+    current_phrase = models.CharField(max_length=50, blank=True)
+    is_public = models.BooleanField(default=True)
+    password = models.CharField(max_length=50, blank=True)
 
     @staticmethod
     def get(name):

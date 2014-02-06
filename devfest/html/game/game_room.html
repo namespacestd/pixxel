@@ -9,7 +9,9 @@
 {% block content %}
     <div class="content">
         <div class="section_title"> Room: {{ room_name }} </div>
-        <div class="section_title"> Current Judge: {{ game_instance.current_judge.user.username }}
+        <div class="section_title"> Current Judge: {{ game_instance.current_judge.user.username }} </div>
+        <div class="section_title"> Is Public: {{game_instance.is_public}} </div>
+        <div class="section_title"> Password: {{game_instance.password}} </div>
         {% if not already_in_game %}
             <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
                 {% csrf_token %}

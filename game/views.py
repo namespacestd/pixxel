@@ -7,6 +7,7 @@ def new_game(request):
 def create_new_room(request):
     if request.method == 'POST':
         game_name = request.POST['room_name']
+        is_private = request.POST.get('is_private')
         
         if GameInstance.get(game_name):
             return render(request, 'game/game.html', { 'error' : 'already exists' })
@@ -15,6 +16,12 @@ def create_new_room(request):
         new_game.game_room_name = game_name
         current_user = UserAccount.get(request.user)
         new_game.current_judge = current_user
+        new_game.owner = current_user
+
+        if is_private:
+            new_game.is_public = False
+            new_game.password = request.POST['room_password']
+
         new_game.save()
         join_game_helper(current_user, game_name)
         return HttpResponseRedirect('/game/room/'+game_name)

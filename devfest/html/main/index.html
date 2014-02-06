@@ -65,15 +65,18 @@
         <div id="main">
             <div id="main-left">
                 <a class="big-button" href="#">Join Game</a>
-                <a class="big-button" href="#">Start New Game</a>
+                <a class="big-button" href="/game/new_game/">Start New Game</a>
             </div>
             <div id="main-right">
                 <h1>» Current Games</h1>
                 <div id="games-list">
-                    <!-- <div class="games-list-game">Alex's Game</div>
-                    <div class="games-list-game">BeSt GaMe EVERRR</div>
-                    <div class="games-list-game">Nerds only</div> -->
-                    <div class="notice">You are currently not in any games.<br/>Click the Join Game button to join one!</div>
+                    {% if current_games %}
+                        {% for game in current_games %}
+                            <a href="/game/room/{{game.game_room_name}}/" class="games-list-game">{{game.game_room_name}}</a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="notice">You are currently not in any games.<br/>Click the Join Game button to join one!</div>
+                    {% endif %}
                 </div>
             </div>
         </div>

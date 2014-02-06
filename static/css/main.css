@@ -1,3 +1,11 @@
+a { 
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+}
+
 body {
     background: url('../img/bg.png');
     margin: 0;
@@ -188,6 +196,7 @@ h1 {
     margin-top: 10px;
 }
 .games-list-game {
+    display: block;
     text-align: left;
     font-size: 14px;
     margin: 5px 0;

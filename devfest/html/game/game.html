@@ -10,10 +10,23 @@
     <form action="/game/create_new_room" method="post">
         {% csrf_token %}
         <input type="text" name="room_name" placeholder="Room Name" required></input>
+        <input id='is_private' type="checkbox" name="is_private" value="is_private">Private</input>
+        <input id='room_password' type="text" name="room_password" style="display: none;" placeholder="Room Password"></input>
         <input type="submit" value="Create Room"></input>
     </form>
 
     {% if error %}
         A game room with that name already exists.
     {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            $('#is_private').click(function() {
+                if($('#is_private').prop('checked')) 
+                    $('#room_password').css('display', 'block');
+            });
+        });
+    </script>
 {% endblock %}
