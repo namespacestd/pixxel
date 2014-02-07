@@ -2,10 +2,6 @@ a {
     text-decoration: none;
 }
 
-a:visited {
-    color: inherit;
-}
-
 body {
     background: url('../img/bg.png');
     margin: 0;
@@ -239,13 +235,18 @@ h1 {
 /*==============
    canvas stuff
   ==============*/
-#canvas {
+#sketch {
     width: 500px;
     height: 400px;
     border: 1px solid black;
     background: #eee;
+    position: relative;
 }
-
+#tmp_canvas {
+    position: absolute;
+    left: 0px; right: 0;
+    bottom: 0; top: 0;
+}
 
 /*===============
    miscellaneous
