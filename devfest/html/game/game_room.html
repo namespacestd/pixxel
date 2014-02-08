@@ -77,6 +77,7 @@
                         {% else %}
                             {% if not user_drawing %}
                                 Draw Here
+
                                 <div id="red">Red</div>
                                 <div id="blue">Blue</div>
                                 <div id="thick">Thick</div>
@@ -85,7 +86,10 @@
                                 <div id="sketch">
                                     <canvas id="paint"></canvas>
                                 </div>
-                                <a id="submit-drawing" class="button">Submit</a>
+                                <form id="submit-drawing-form" action="/game/submit_drawing/{{room_name}}/" method="POST">
+                                    {% csrf_token %}
+                                    <input id="submit-drawing" type="submit" class="button"></input>
+                                </form>
                                 <!-- <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input name="drawn_image" type="file" required> </input>
@@ -104,4 +108,7 @@
 
 {% block js %}
     <script src="/static/js/canvas.js"></script>
+    <script>
+        var room_name = "{{room_name}}";
+    </script>
 {% endblock %}

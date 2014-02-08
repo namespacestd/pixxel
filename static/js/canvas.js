@@ -106,13 +106,13 @@ $(document).ready(function() {
 
 
 
-    $('#submit-drawing').click(function() {
+    $('#submit-drawing-form').submit(function(e){
         var dataURL = canvas.toDataURL();
         $.ajax({
             type: "POST",
-            url: "/game/submit_drawing/",
+            url: "/game/submit_drawing/"+room_name+"/",
             data: { 
-                imgBase64: dataURL
+                inmgBase64: dataURL
             }
         }).done(function(o) {
             console.log('saved'); 

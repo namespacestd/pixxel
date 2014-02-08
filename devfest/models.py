@@ -95,6 +95,7 @@ class DrawInstance(models.Model):
     round_number = models.IntegerField()
     was_round_winner = models.BooleanField(default=False)
     round_judge = models.ForeignKey(UserAccount,related_name='draw_instance_judge')
+    phrase = models.CharField(max_length=50)
 
     @staticmethod
     def get(user, game, round_number):

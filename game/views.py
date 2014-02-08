@@ -109,14 +109,16 @@ def judge_phrase(request, room_name):
     return HttpResponseRedirect('/game/room/' + room_name)
 
 def submit_drawing(request, room_name):
-    current_user = UserAccount.get(request.user)
-    current_room = GameInstance.get(room_name)
-    round_number = current_room.current_round
-    user_drawing = request.FILES['drawn_image']
+    if request.method == 'POST':
+        current_user = UserAccount.get(request.user)
+        current_room = GameInstance.get(room_name)
+        round_number = current_room.current_round
 
-    drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge)
-    drawing.save()
-    
+        user_drawing = request.FILES['drawn_image']
+
+        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge)
+        drawing.save()
+        
     return HttpResponseRedirect('/game/room/' + room_name)
 
 def judge_drawing(request, room_name):
