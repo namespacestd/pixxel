@@ -336,12 +336,18 @@ h1 {
 .drawing-pending {
     font-family: 'Open Sans';
     color: #ccc;
-    text-shadow: 1px 1px 3px black;
     margin-top: 8px;
     font-size: 13px;
 }
 .drawing-pending.drawing-submitted {
     margin-top: 4px;
+}
+
+.winner {
+    color: #5CBD44;
+}
+.loser {
+    color: #D43D3D;
 }
 
 #game-tools {
@@ -502,4 +508,30 @@ h1 {
 .small {
     font-size: 12px;
     color: #aaa;
+}
+.wtf {
+    font-size: 12px;
+    color: #aaa;
+    font-style: italic;
+}
+
+.choose-drawing-button {
+    display: inline-block;
+    padding: 5px 15px;
+    font-family: 'Belgrano';
+    font-size: 14px;
+    text-decoration: none;
+    color: black !important;
+    border: 1px solid #111;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(#A0C6F2, #456C99);
+    background-size: auto 200%;
+    background-position: 0 100%;
+    transition: background-position 0.33s;
+    outline: none;
+}
+.choose-drawing-button:hover {
+    background-position: 0 0;
+    cursor: pointer;
 }

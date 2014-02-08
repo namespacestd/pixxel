@@ -42,9 +42,9 @@
                                         <a href="/{{drawing.picture}}" data-lightbox="user_drawing"><img class="drawing-thumbnail" src="/{{drawing.picture}}"></img></a>
 
                                         {% if drawing.was_round_winner %}
-                                            <div class="drawing-pending drawing-submitted"> Winner </div>
+                                            <div class="drawing-pending drawing-submitted winner"> Winner </div>
                                         {% else %}   
-                                            <div class="drawing-pending drawing-submitted"> Loser </div>                             
+                                            <div class="drawing-pending drawing-submitted loser"> Loser </div>                             
                                         {% endif %}
 
                                     </div>
@@ -101,7 +101,7 @@
                                                     {% endif %}
 
                                                     {% if all_submitted %}
-                                                        <input class="drawing-submit" type="submit" name="{{drawing.username}}" value="Choose this Drawing"></input>
+                                                        <input class="choose-drawing-button" class="drawing-submit" type="submit" name="{{drawing.username}}" value="Choose Drawing"></input>
                                                     {% elif not drawing.drawing %}
                                                         <div class="drawing-pending"> Waiting for Submission... </div>
                                                     {% else %}
@@ -239,7 +239,7 @@
                                 <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
                                 <h1>» Players</h1>
                                     {% for user in userlist %}
-                                        {{ user.username }}<br>
+                                        <span class="wtf">{{ user.username }}</span><br>
                                     {% endfor %}
                                 <a href="/game/start_game/{{room_name}}/" class="button small-top-margin">Start Game</a><br>
                                 <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
@@ -249,7 +249,7 @@
                                 <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
                                 <h1>» Players</h1>
                                     {% for user in userlist %}
-                                        {{ user.username }}<br>
+                                        <span class="wtf">{{ user.username }}</span><br>
                                     {% endfor %}
                                 <div class="notice-waiting small-top-margin">Waiting for more players...</div>
                                 <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
@@ -260,7 +260,7 @@
                             <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
                             <h1>» Players</h1>
                                 {% for user in userlist %}
-                                    {{ user.username }}<br>
+                                    <span class="wtf">{{ user.username }}</span><br>
                                 {% endfor %}
                             {% if open_slots %}
                                 {% if already_in_game %}
