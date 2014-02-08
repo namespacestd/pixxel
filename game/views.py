@@ -49,8 +49,6 @@ def leave_room(request, room_name):
     if (current_user == current_room.current_judge):
         choose_next_judge(current_room)
     current_room.users.remove(current_user)
-    if (len(current_room.users.all()) < 2):
-        current_room.delete()
     return HttpResponseRedirect('/')
 
 
