@@ -51,12 +51,12 @@
                     <br/>
                 {% endfor %}
             {% else %}
-                {% if game_instance.game_started %}
-                        {% if is_current_judge %}
-                            {% if game_instance.current_phrase %}
 
+    {% if game_instance.game_started %}
+            <!-- Judge -->
+                {% if is_current_judge %}
+                    {% if game_instance.current_phrase %}
                                 People Drawing: {{ num_drawing }}
-
                                 <form action="/game/judge_drawing/{{room_name}}/" method="post">
                                     {% csrf_token %}
                                     {% for drawing in user_drawings %}
@@ -122,9 +122,12 @@
                         Waiting for more players...
                     {% endif %}
                 {% elif already_in_game %}
+                <!-- Leave Room -->
+                <br>
+                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                {% else %}
                     Waiting for owner to start game...
                 {% endif %}
-
             {% endif %}
         </div>
     </div>
