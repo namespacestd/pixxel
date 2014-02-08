@@ -108,7 +108,15 @@ $(document).ready(function() {
 
     $('#submit-drawing').click(function() {
         var dataURL = canvas.toDataURL();
-        console.log(dataURL);
+        $.ajax({
+            type: "POST",
+            url: "/game/submit_drawing/",
+            data: { 
+                imgBase64: dataURL
+            }
+        }).done(function(o) {
+            console.log('saved'); 
+        });
     });
     
     $('#red').click(function() {
@@ -124,5 +132,8 @@ $(document).ready(function() {
     });
     $('#thick').click(function() {
         tmp_ctx.lineWidth = 5;
+    });
+    $('#clear').click(function() {
+        ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
     });
 });
