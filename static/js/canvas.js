@@ -34,7 +34,11 @@ $(document).ready(function() {
         mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;
     }, false);
     
-    
+    h = parseInt(document.getElementById("paint").getAttribute("height"));
+    w = parseInt(document.getElementById("paint").getAttribute("width"));
+    ctx.fillStyle = "#eeeeee";
+    ctx.fillRect(0,0,w,h);
+
     /* Drawing on Paint App */
     tmp_ctx.lineWidth = 5;
     tmp_ctx.lineJoin = 'round';
@@ -104,7 +108,25 @@ $(document).ready(function() {
         }
     };
 
+    $('#thickness').slider({
+        change: function(e,ui) {
+            tmp_ctx.lineWidth = ui.value;
+        },
+        value: 3,
+        min: 1.5,
+        max: 20,
+        step: 0.5
+    });
 
+    $('#opacity').slider({
+        change: function(e,ui) {
+            tmp_ctx.globalAlpha = ui.value;
+        },
+        value: 0.95,
+        min: 0.05,
+        max: 1,
+        step: 0.05
+    });
 
     $('#submit-drawing-form').submit(function(e) {
         var dataURL = canvas.toDataURL();
@@ -119,12 +141,7 @@ $(document).ready(function() {
         tmp_ctx.strokeStyle = 'blue';
         tmp_ctx.fillStyle = 'blue';
     });
-    $('#thin').click(function() {
-        tmp_ctx.lineWidth = 2;
-    });
-    $('#thick').click(function() {
-        tmp_ctx.lineWidth = 5;
-    });
+    
     $('#clear').click(function() {
         ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
     });

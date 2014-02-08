@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+    {% include 'main/header.html' %}
     <form action="/game/create_new_room" method="post">
         {% csrf_token %}
         <input type="text" name="room_name" placeholder="Room Name" required></input>

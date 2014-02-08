@@ -130,7 +130,7 @@ class DrawInstance(models.Model):
                 picture_data["phrase"] = instance.phrase
                 picture_data["timestamp"] = instance.timestamp
                 user_images.append(picture_data)
-            recent_images = sorted(l, key=itemgetter('timestamp'), reverse=True)
+            recent_images = sorted(user_images, key=itemgetter('timestamp'), reverse=True)
             del recent_images[5:]
             return recent_images
 
