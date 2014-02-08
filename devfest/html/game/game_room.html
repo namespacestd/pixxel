@@ -71,8 +71,29 @@
                         </div>
             {% else %}
                 {% if game_over %}
-                    The game has completed. See the final score total above.
-                    <a href="/" class="button"> Return to Dashboard </a>
+                    <div id="game-main">
+                        <div id="top-info">
+                        </div>
+                        <div id="game-over">
+                            <div id="game-info">
+                                <div class="centered"><h1>» Final Scores </h1></div>
+                                <table id="playerlist">
+                                    {% for user in userlist %}
+                                    <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                    {% endfor %}
+                                </table>
+                                <div class="small-top-margin"></div>
+                                <div class="centered">
+                                    <a class="button" href="/">Back to Home</a>
+                                </div>
+                            </div>
+                            <div id="game-players"></div>
+                        </div>
+                        <div id="game-right">
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </div>  
                 {% else %}
                     {% if game_instance.game_started %}
                     <!-- Judge -->
@@ -252,6 +273,7 @@
                                         {{ user.username }}<br>
                                     {% endfor %}
                                 <div class="notice-waiting small-top-margin">Waiting for more players...</div>
+                                <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
                                 <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
                             </div>
                         {% endif %}
@@ -265,7 +287,8 @@
                             {% if open_slots %}
                                 {% if already_in_game %}
                                     <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
-                                    <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                    <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
                                 {% elif not game_instance.game_started and not already_in_game %}
                                     <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
                                         {% csrf_token %}

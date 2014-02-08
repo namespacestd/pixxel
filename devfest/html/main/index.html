@@ -78,6 +78,15 @@
                         <div class="notice">You are currently not in any games.<br/>Click the buttons to join or create one.</div>
                     {% endif %}
                 </div>
+                <br/>
+                <h1>» Completed Games</h1>
+                <div id="games-list">
+                    {% if completed_games %}
+                        {% for game in completed_games %}
+                            <a href="/game/room/{{game.game_room_name}}/" class="games-list-game">{{game.game_room_name}}</a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
         <div class="clear"></div>

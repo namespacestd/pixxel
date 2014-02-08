@@ -459,6 +459,11 @@ h1 {
     font-size: 12px;
     background-color: #eee;
 }
+#game-over {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /*===============
    miscellaneous
