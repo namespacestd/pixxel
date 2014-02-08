@@ -129,16 +129,17 @@
                     {% elif is_owner %}
                         {% if game_startable %}
                             <div class="centered text">
-                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span></div>
+                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
                                 <h1>» Players</h1>
                                     {% for user in userlist %}
                                         {{ user.username }}<br>
                                     {% endfor %}
-                                <a href="/game/start_game/{{room_name}}/" class="button small-top-margin">Start Game</a>
+                                <a href="/game/start_game/{{room_name}}/" class="button small-top-margin">Start Game</a><br>
+                                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
                             </div>
                         {% else %}
                             <div class="centered text">
-                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span></div>
+                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
                                 <h1>» Players</h1>
                                     {% for user in userlist %}
                                         {{ user.username }}<br>
@@ -149,14 +150,14 @@
                         {% endif %}
                     {% else %}
                         <div class="centered text">
-                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span></div>
+                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
                             <h1>» Players</h1>
                                 {% for user in userlist %}
                                     {{ user.username }}<br>
                                 {% endfor %}
-                            <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
                             {% if open_slots %}
                                 {% if already_in_game %}
+                                    <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
                                     <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
                                 {% elif not game_instance.game_started and not already_in_game %}
                                     <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
