@@ -186,6 +186,10 @@ def judge_drawing(request, room_name):
         draw_instance.was_round_winner = True
         draw_instance.save()
 
+        winner_score = ScoreInstance.get(chosen_drawing, game_room)
+        winner_score.score+=1
+        winner_score.save()
+
         choose_next_judge(game_room)
 
     return HttpResponseRedirect('/game/room/' + room_name)

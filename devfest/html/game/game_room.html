@@ -120,8 +120,9 @@
                 <!-- Leave Room -->
                 <br>
                 <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                {% else %}
+                    Waiting for owner to start game...
                 {% endif %}
-
             {% endif %}
         </div>
     </div>
