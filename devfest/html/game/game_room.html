@@ -88,6 +88,7 @@
                                 </div>
                                 <form id="submit-drawing-form" action="/game/submit_drawing/{{room_name}}/" method="POST">
                                     {% csrf_token %}
+                                    <input type="hidden" name="image_data" id="image_data"></input>
                                     <input id="submit-drawing" type="submit" class="button"></input>
                                 </form>
                                 <!-- <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
@@ -108,7 +109,4 @@
 
 {% block js %}
     <script src="/static/js/canvas.js"></script>
-    <script>
-        var room_name = "{{room_name}}";
-    </script>
 {% endblock %}

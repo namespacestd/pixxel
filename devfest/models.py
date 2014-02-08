@@ -107,6 +107,7 @@ class DrawInstance(models.Model):
         results = DrawInstance.objects.filter(user=user, game=game, round_number=round_number)
         try:
             return results[0]
+
         except IndexError:
             return None
 

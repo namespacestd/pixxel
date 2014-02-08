@@ -106,17 +106,9 @@ $(document).ready(function() {
 
 
 
-    $('#submit-drawing-form').submit(function(e){
+    $('#submit-drawing-form').submit(function(e) {
         var dataURL = canvas.toDataURL();
-        $.ajax({
-            type: "POST",
-            url: "/game/submit_drawing/"+room_name+"/",
-            data: { 
-                inmgBase64: dataURL
-            }
-        }).done(function(o) {
-            console.log('saved'); 
-        });
+        $('#image_data').val(dataURL);
     });
     
     $('#red').click(function() {
