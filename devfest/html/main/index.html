@@ -18,11 +18,11 @@
                     {% csrf_token %}
                     <table>
                         <tr>
-                            <td><label>{{ login_form.username.label_tag }}:</label></td>
+                            <td><label>Username:</label></td>
                             <td>{{ login_form.username }}</td>
                         </tr>
                         <tr>
-                            <td><label>{{ login_form.password.label_tag }}:</label></td>
+                            <td><label>Password:</label></td>
                             <td>{{ login_form.password }}</td>
                         </tr>
                     </table>
@@ -65,7 +65,7 @@
         <div id="main">
             <div id="main-left">
                 <a class="big-button" href="/game/open_games/">Join Game</a>
-                <a class="big-button" href="/game/new_game/">Start New Game</a>
+                <a class="big-button" href="/game/new_game/">Create New Game</a>
             </div>
             <div id="main-right">
                 <h1>» Current Games</h1>
@@ -75,7 +75,7 @@
                             <a href="/game/room/{{game.game_room_name}}/" class="games-list-game">{{game.game_room_name}}</a>
                         {% endfor %}
                     {% else %}
-                        <div class="notice">You are currently not in any games.<br/>Click the Join Game button to join one!</div>
+                        <div class="notice">You are currently not in any games.<br/>Click the buttons to join or create one.</div>
                     {% endif %}
                 </div>
             </div>
