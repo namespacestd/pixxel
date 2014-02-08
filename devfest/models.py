@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django import forms
 from operator import itemgetter
 
+import logging
+
+logger = logging.getLogger('root.' + __name__)
+
 class UserAccount(models.Model):
     user = models.ForeignKey(User)
     email_address = models.EmailField()

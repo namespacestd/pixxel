@@ -297,11 +297,50 @@ h1 {
 }
 #game-left {
     float: left;
-    background-color: blue;
     width: 580px;
     height: 500px;
-    margin-right: 20px;
+    margin-right: 19px;
+    padding: 0px .5px;
 }
+.user-drawing {
+    float: left;
+    margin: 0px 12px;
+    margin-top: 25px;
+    width: 169px;
+    height: 212.5px;
+    text-align: center;
+
+}
+.drawing-user {
+    text-align: center;
+    font-family: 'Open Sans';
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    color: #ccc;
+    text-shadow: 1px 1px 3px black;
+}
+.drawing-thumbnail {
+    background-color: white;
+    width: 169px;
+    height: 136.29px;
+}
+.drawing-submit {
+    font-family: 'Open Sans';
+    margin-top: 8px;
+    font-size: 13px;
+}
+.drawing-pending {
+    font-family: 'Open Sans';
+    color: #ccc;
+    text-shadow: 1px 1px 3px black;
+    margin-top: 8px;
+    font-size: 13px;
+}
+.drawing-pending.drawing-submitted {
+    margin-top: 4px;
+}
+
 #game-tools {
     background-color: red;
     height: 80px;

@@ -41,25 +41,58 @@
                     <!-- Judge -->
                         {% if is_current_judge %}
                             {% if game_instance.current_phrase %}
-                                People Drawing: {{ num_drawing }}
-                                <form action="/game/judge_drawing/{{room_name}}/" method="post">
-                                    {% csrf_token %}
-                                    {% for drawing in user_drawings %}
-                                        <div class="user_drawing">
-                                            {{ drawing.username }} 
-                                            <div class="drawing_image">
-                                                {% if drawing.drawing %}
-                                                    <a href="/{{drawing.drawing.picture}}" data-lightbox="user_drawing"><img src="/{{drawing.drawing.picture}}" width="150" height="150"/></a>
-                                                {% else %}
-                                                    Blank_image.png
-                                                {% endif %}
-                                                {% if all_submitted %}
-                                                    <input type="submit" name="{{drawing.username}}" value="Choose this Drawing"></input>
-                                                {% endif %}
-                                            </div>
+                                <div id="game-main">
+                                    <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                        {% if game_instance.current_phrase %}
+                                        <span class="glow">{{game_instance.current_phrase}}</span>
+                                        {% else %}
+                                        <span class="glow">N/A</span>
+                                        {% endif %}
+                                    </div>
+                                    <div id="game-left">
+
+                                        <form action="/game/judge_drawing/{{room_name}}/" method="post">
+                                            {% csrf_token %}
+                                            {% for drawing in user_drawings %}
+                                                <div class="user-drawing">
+                                                    <div class="drawing-user">
+                                                        {{ drawing.username }} 
+                                                    </div>
+                                                    {% if drawing.drawing %}
+                                                        <a href="/{{drawing.drawing.picture}}" data-lightbox="user_drawing"><img class="drawing-thumbnail" src="/{{drawing.drawing.picture}}"></img></a>
+                                                    {% else %}
+                                                        <div class="drawing-thumbnail"></div>
+                                                    {% endif %}
+
+                                                    {% if all_submitted %}
+                                                        <input class="drawing-submit" type="submit" name="{{drawing.username}}" value="Choose this Drawing"></input>
+                                                    {% elif not drawing.drawing %}
+                                                        <div class="drawing-pending"> Waiting for Submission... </div>
+                                                    {% else %}
+                                                        <div class="drawing-pending drawing-submitted"> Submitted </div>                                       
+                                                    {% endif %}
+
+                                                </div>
+                                            {% endfor %}
+                                        </form>
+
+                                    </div>
+                                    <div id="game-right">
+                                        <div id="game-info" class="centered">
+                                            <h1>» Players</h1>
+                                            <table id="playerlist">
+                                                {% for user in userlist %}
+                                                <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                                {% endfor %}
+                                            </table>
+                                            <div class="small-top-margin"></div>
+                                            <a class="button" href="/">Back to Home</a>
+                                            <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
                                         </div>
-                                    {% endfor %}
-                                </form>
+                                        <div id="game-players"></div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>                                
                             {% else %}
                                 <form action="/game/judge_phrase/{{room_name}}/" method="post">
                                     {% csrf_token %}
