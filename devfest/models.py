@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
+from operator import itemgetter
 
 class UserAccount(models.Model):
     user = models.ForeignKey(User)
@@ -110,6 +111,29 @@ class DrawInstance(models.Model):
 
         except IndexError:
             return None
+
+    @staticmethod
+    def get_recent_images(user):
+        if user is None:
+            return None
+
+        #Check if user has images, and return them
+        results = DrawInstance.objects.filter(user=user)
+        try:
+            user_images = []
+            for instance in results:
+                picture_data = {}
+                picture_data["picture"] = instance.picture
+                picture_data["was_round_winner"] = instance.was_round_winner
+                picture_data["phrase"] = instance.phrase
+                picture_data["timestamp"] = instance.timestamp
+                user_images.append(picture_data)
+            recent_images = sorted(l, key=itemgetter('timestamp'), reverse=True)
+            del recent_images[5:]
+        return recent_images
+
+        except IndexError:
+            return None 
 
     @staticmethod
     def get_all_for_round(game, round_number):

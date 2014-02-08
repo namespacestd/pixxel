@@ -5,6 +5,7 @@ import re
 import base64
 import hashlib
 import time
+from datetime import datetime
 
 def new_game(request):
     return render(request, 'game/game.html')
@@ -118,6 +119,8 @@ def submit_drawing(request, room_name):
         current_user = UserAccount.get(request.user)
         current_room = GameInstance.get(room_name)
         round_number = current_room.current_round
+        phrase = GameInstance.get(room_name).current_phrase
+        timestamp = datetime.now()
 
         dataUrlPattern = re.compile('data:image/(png|jpeg);base64,(.*)$')
         image_data = request.POST['image_data']
@@ -136,7 +139,7 @@ def submit_drawing(request, room_name):
 
         #user_drawing = request.FILES['drawn_image']
 
-        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge)
+        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge, phrase=phrase, timestamp = timestamp)
         drawing.save()
         
     return HttpResponseRedirect('/game/room/' + room_name)
