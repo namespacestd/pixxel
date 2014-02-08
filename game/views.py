@@ -43,6 +43,13 @@ def open_games(request):
         'open_games': open_games
     })
 
+def leave_room(room_name):
+    current_room = GameInstance.get(room_name)
+    current_user = UserAccount.get(request.user)
+    current_room.remove(current_user)
+    return render(request, '/')
+
+
 def game_room(request, room_name):
     current_room = GameInstance.get(room_name)
     userlist = current_room.users.all()

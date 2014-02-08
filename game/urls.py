@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^judge_phrase/(?P<room_name>\w+)/+$', views.judge_phrase, name='judge_phrase'),
     url(r'^judge_drawing/(?P<room_name>\w+)/+$', views.judge_drawing, name='judge_drawing'),
     url(r'^next_round/(?P<room_name>\w+)/+$', views.next_round, name='next_round'),
+#    url(r'^leave_room/(?P<room_name>\w+)/+$', views.leave_room, name='leave_room'),
 )
