@@ -189,7 +189,7 @@ def judge_drawing(request, room_name):
     if request.method == 'POST':
         chosen_drawing = None
         for key, value in request.POST.items():
-            if value == 'Choose this Drawing':
+            if value == 'Choose Drawing':
                 chosen_drawing = UserAccount.find(key)
 
         game_room = GameInstance.get(room_name)
