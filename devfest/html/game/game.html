@@ -19,6 +19,14 @@
             <option value="5">Five</option>
             <option value="10">Ten</option>
         </select>
+        <select name="max_players">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7" selected>7</option>
+        </select>
         <input type="submit" value="Create Room"></input>
     </form>
 
@@ -31,8 +39,14 @@
     <script>
         $(document).ready(function() {
             $('#is_private').click(function() {
-                if($('#is_private').prop('checked')) 
-                    $('#room_password').css('display', 'block');
+                if($('#is_private').prop('checked')) {
+                    $('#room_password').show();
+                    $('#room_password').attr('required', true);
+                }
+                else {
+                    $('#room_password').hide();
+                    $('#room_password').removeAttr('required', false);
+                }
             });
         });
     </script>

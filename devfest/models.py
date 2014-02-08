@@ -49,6 +49,7 @@ class GameInstance(models.Model):
     password = models.CharField(max_length=50, blank=True)
     game_started = models.BooleanField(default=False)
     num_rounds = models.IntegerField(default=10)
+    max_players = models.IntegerField(default=7)
 
     @staticmethod
     def get(name):

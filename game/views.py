@@ -15,6 +15,7 @@ def create_new_room(request):
         game_name = request.POST.get('room_name')
         is_private = request.POST.get('is_private')
         num_rounds = request.POST.get('num_rounds')
+        max_players = request.POST.get('max_players')
         
         if GameInstance.get(game_name):
             return render(request, 'game/game.html', { 'error' : 'already exists' })
@@ -24,6 +25,7 @@ def create_new_room(request):
         current_user = UserAccount.get(request.user)
         new_game.current_judge = current_user
         new_game.owner = current_user
+        new_game.max_players = max_players
 
         new_game.num_rounds = int(num_rounds)
 
@@ -50,6 +52,7 @@ def game_room(request, room_name):
     current_judge = None
     user_drawing = None
     num_submitted = 0
+    is_owner = UserAccount.get(request.user) == current_room.owner
 
     previous_result_data = None
 
@@ -92,8 +95,17 @@ def game_room(request, room_name):
         'is_current_judge' : current_judge,
         'user_drawing' : user_drawing,
         'all_submitted' : num_submitted == len(userlist)-1,
-        'previous_round_data' : previous_result_data
+        'previous_round_data' : previous_result_data,
+        'open_slots' : current_room.max_players > len(userlist),
+        'game_startable' : len(userlist) > 1,
+        'is_owner' : is_owner,
     })
+
+def start_game(request, room_name):
+    current_room = GameInstance.get(room_name)
+    current_room.game_started = True
+    current_room.save()
+    return HttpResponseRedirect('/game/room/' + room_name)
 
 def join_game(request, room_name):
     join_game_helper(UserAccount.get(request.user), room_name)
