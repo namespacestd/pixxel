@@ -1,0 +1,45 @@
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
+{% endblock %}
+
+{% block content %}
+    <h1>Profile</h1>
+
+    <div style="background-color:white;">
+        <label>Avatar:</label>
+        <br><br>
+    </div>
+
+    <div style="background-color:white;">
+        <label>Username: {{ username }}</label>
+        <br><br>
+    </div>
+
+    <div style="background-color:white;">
+        <label>E-mail address: {{ email }}</label>
+        <br><br>
+    </div>
+
+    <div style="background-color:white;">
+        <label>Win ratio:</label>
+        <br><br>
+    </div>
+
+    <div id="recent_drawings">
+        {% for x in drawings %}
+            <div>
+                <img src="/{{x.picture}}"></img>
+                <br>Phrase: {{x.phrase}}
+                {% if x.was_round_winner %}
+                    <font color="green">Won :)</font>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+{% endblock %}
