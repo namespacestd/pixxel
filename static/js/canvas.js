@@ -44,8 +44,8 @@ $(document).ready(function() {
         tmp_ctx.lineWidth = 5;
         tmp_ctx.lineJoin = 'round';
         tmp_ctx.lineCap = 'round';
-        tmp_ctx.strokeStyle = 'blue';
-        tmp_ctx.fillStyle = 'blue';
+        tmp_ctx.strokeStyle = 'black';
+        tmp_ctx.fillStyle = 'black';
         
         tmp_canvas.addEventListener('mousedown', function(e) {
             document.onselectstart = function() { return false; } // disable drag-select
@@ -137,6 +137,8 @@ $(document).ready(function() {
     
     $('.color-choice').click(function() {
         var colorId = $(this).attr('id');
+        $('.color-choice').css({boxShadow: "none", opacity: 0.9});
+        $(this).css({boxShadow: "0 0 0px 2px black", opacity: 1.0});
         tmp_ctx.strokeStyle = colorId;
         tmp_ctx.fillStyle = colorId;
     });
