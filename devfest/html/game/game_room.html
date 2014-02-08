@@ -165,6 +165,7 @@
                                         {% if not game_instance.is_public %} 
                                             <div class="notice-waiting small-top-margin">This room is private. Please enter the password.</div>
                                             <input type="text" name="room_password" placeholder='Password' required></input>
+                                            <div class="error"></div>
                                         {% endif %} 
                                         <div class="centered small-top-margin">
                                             <input type="submit" class="button" value="Join Room">
@@ -189,4 +190,26 @@
     {% else %}
         <script src="/static/js/lightbox-2.6.min.js"></script>
     {% endif %}
+
+    <script>
+        $('#join_room_button').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                method: 'POST',
+                url: '/game/room/join_game/{{room_name}}/',
+                data: $(this).serialize(),
+                success: function(data) {
+                    if (data == 'Success') {
+                        location.reload();
+                    }
+                    else {
+                        $('#join_room_button .error').html(data);
+                    }
+                },
+                error: function() {
+                    alert('Unable to reach server. Please check your internet connection and try again.');
+                }
+            });
+        });
+    </script>
 {% endblock %}

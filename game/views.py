@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from devfest.models import GameInstance, UserAccount, ScoreInstance, DrawInstance
 from django.core.files.base import ContentFile
 import re
@@ -129,10 +129,11 @@ def join_game(request, room_name):
     if not current_room.is_public:
         password = request.POST.get('room_password')
         if current_room.password != password:
-           return HttpResponseRedirect('/game/room/' + room_name) 
+            error_msg = "Incorrect room password."
+            return HttpResponse(error_msg)
     
     join_game_helper(UserAccount.get(request.user), room_name)
-    return HttpResponseRedirect('/game/room/' + room_name)
+    return HttpResponse('Success')
 
 def join_game_helper(user_account, room_name):
     current_user = user_account
