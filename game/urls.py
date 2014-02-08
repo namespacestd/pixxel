@@ -13,4 +13,5 @@ urlpatterns = patterns('',
     url(r'^next_round/(?P<room_name>\w+)/+$', views.next_round, name='next_round'),
     url(r'^leave_room/(?P<room_name>\w+)/+$', views.leave_room, name='leave_room'),
     url(r'^start_game/(?P<room_name>\w+)/+$', views.start_game, name='start_game'),
+    url(r'^room/kick_player/(?P<room_name>\w+)/+$', views.kick_player, name='kick_player'),
 )

@@ -46,11 +46,14 @@ def open_games(request):
 def leave_room(request, room_name):
     current_room = GameInstance.get(room_name)
     current_user = UserAccount.get(request.user)
-    if (current_user == current_room.current_judge):
-        choose_next_judge(current_room)
-    current_room.users.remove(current_user)
+    remove_player(current_user, current_room)
+
     return HttpResponseRedirect('/')
 
+def remove_player(user, room):
+    if (user == room.current_judge):
+        choose_next_judge(room)
+    room.users.remove(user)
 
 def game_room(request, room_name):
     try:
@@ -231,5 +234,10 @@ def choose_next_judge(game_instance):
     print next_judge.user.username
     game_instance.save()
 
-
-
+def kick_player(request, room_name):
+    for element in request.POST:
+        if 'kick' in element:
+            player_name = request.POST.get(element)
+            remove_player(UserAccount.find(player_name), GameInstance.get(room_name))
+            
+    return HttpResponseRedirect('/game/room/' + room_name)

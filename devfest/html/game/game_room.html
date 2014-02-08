@@ -33,9 +33,22 @@
         {% endif %}
         <div id="current_room_users">
             <div class="content_title"> Current Users </div>
-            {% for user in userlist %}
-                <div class="game_entry"> {{ user.username }} ({{ user.score.score }}) </div>
-            {% endfor %}
+            {% if is_owner and game_startable and not game_over%}
+                <form action="/game/room/kick_player/{{room_name}}/" method="post">
+                    {% csrf_token %}
+            {% endif %}
+
+                {% for user in userlist %}
+                    <div class="game_entry"> {{ user.username }} ({{ user.score.score }}) </div>
+                    {% if user.username != game_instance.owner.user.username and not game_over%}
+                        <input type="checkbox" name="kick_{{user.username}}" value="{{user.username}}"></input>
+                    {% endif %}
+                {% endfor %}
+
+            {% if is_owner and game_startable and not game_over %}
+                    <input type="submit" value="Kick Players"></input>
+                </form>
+            {% endif %}
         </div>
 
         <div>
