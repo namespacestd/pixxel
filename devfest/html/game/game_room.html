@@ -4,9 +4,11 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 {% endblock %}
 
 {% block content %}
+    {% include 'main/header.html' %}
     <div class="content">
         <div class="section_title"> Room: {{ room_name }} </div>
         <div class="section_title"> Current Judge: {{ game_instance.current_judge.user.username }} </div>
@@ -80,9 +82,9 @@
 
                                 <div id="red">Red</div>
                                 <div id="blue">Blue</div>
-                                <div id="thick">Thick</div>
-                                <div id="thin">Thin</div>
                                 <div id="clear">Clear</div>
+                                <div id="opacity"></div>
+                                <div id="thickness"></div>
                                 <div id="sketch">
                                     <canvas id="paint"></canvas>
                                 </div>

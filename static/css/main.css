@@ -247,6 +247,10 @@ h1 {
     left: 0px; right: 0;
     bottom: 0; top: 0;
 }
+#thickness, #opacity {
+    width: 100px;
+    margin: 5px 20px;
+}
 
 /*===============
    miscellaneous
