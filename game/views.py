@@ -43,11 +43,11 @@ def open_games(request):
         'open_games': open_games
     })
 
-def leave_room(room_name):
+def leave_room(request, room_name):
     current_room = GameInstance.get(room_name)
     current_user = UserAccount.get(request.user)
-    current_room.remove(current_user)
-    return render(request, '/')
+    current_room.users.remove(current_user)
+    return HttpResponseRedirect('/')
 
 
 def game_room(request, room_name):
