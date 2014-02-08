@@ -97,7 +97,6 @@ class DrawInstance(models.Model):
     was_round_winner = models.BooleanField(default=False)
     round_judge = models.ForeignKey(UserAccount,related_name='draw_instance_judge')
     phrase = models.CharField(max_length=50)
-
     @staticmethod
     def get(user, game, round_number):
         # If parameter is empty, return nothing
@@ -129,7 +128,7 @@ class DrawInstance(models.Model):
                 user_images.append(picture_data)
             recent_images = sorted(l, key=itemgetter('timestamp'), reverse=True)
             del recent_images[5:]
-        return recent_images
+            return recent_images
 
         except IndexError:
             return None 
