@@ -9,7 +9,27 @@
 
 {% block content %}
     {% include 'main/header.html' %}
-    <div class="content">
+    <div id="game-main">
+        <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+            {% if game_instance.current_phrase %}
+                <span class="glow">{{game_instance.current_phrase}}</span>
+            {% else %}
+                <span class="glow">N/A</span>
+            {% endif %}
+        </div>
+        <div id="game-left">
+            <div id="game-tools"></div>
+        </div>
+        <div id="game-right">
+            <div id="game-info" class="centered">
+                <h1>» Players</h1>
+            </div>
+            <div id="game-players"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div class="top-margin">
         <div class="section_title"> Room: {{ room_name }} </div>
         <div class="section_title"> Current Judge: {{ game_instance.current_judge.user.username }} </div>
         <div class="section_title"> Is Public: {{game_instance.is_public}} </div>
@@ -131,21 +151,20 @@
                                         {% endif %}
                                     {% endif %}
                             {% endif %}
-                        {% elif is_owner %}
-                            {% if game_startable %}
-                                <a href="/game/start_game/{{room_name}}/" class='button'>Start Game</a>
-                            {% else %}
-                                Waiting for more players...
-                            {% endif %}
-                        {% elif already_in_game %}
-                        <!-- Leave Room -->
-                        <br>
-                        <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
-                        {% else %}
-                            Waiting for owner to start game...
-                        {% endif %}
+                    {% endif %}
+                {% elif is_owner %}
+                    {% if game_startable %}
+                        <a href="/game/start_game/{{room_name}}/" class='button'>Start Game</a>
+                    {% else %}
+                        Waiting for more players...
+                    {% endif %}
+                {% else %}
+                    Waiting for owner to start game...
                 {% endif %}
             {% endif %}
+            <!-- Leave Room -->
+                <br>
+                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
         </div>
     </div>
 {% endblock %}
