@@ -265,20 +265,15 @@ h1 {
    canvas stuff
   ==============*/
 #sketch {
-    width: 500px;
-    height: 400px;
-    border: 1px solid black;
-    background: #eee;
+    /*width: 500px;*/
+    height: 466px;
+    background: #fff;
     position: relative;
 }
 #tmp_canvas {
     position: absolute;
     left: 0px; right: 0;
     bottom: 0; top: 0;
-}
-#thickness, #opacity {
-    width: 100px;
-    margin: 5px 20px;
 }
 
 /*===========
@@ -295,12 +290,20 @@ h1 {
     width: 800px;
     margin: 25px auto 0;
 }
-#game-left {
+#game-left-judge {
     float: left;
     width: 580px;
     height: 500px;
     margin-right: 19px;
     padding: 0px .5px;
+}
+
+#game-left {
+    float: left;
+    width: 578px;
+    height: 500px;
+    margin-right: 20px;
+    border: 1px solid #111;
 }
 .user-drawing {
     float: left;
@@ -342,13 +345,67 @@ h1 {
 }
 
 #game-tools {
+    height: 25px;
+    background-color: #eee;
+    padding: 4px 8px;
+    border-bottom: 1px solid #111;
+}
+.color-choice {
+    display: inline-block;
+    margin: 0 2px 0 0;
+    height: 20px;
+    width: 20px;
+    border: 1px solid #111;
+    box-shadow: 0 0 2px black;
+}
+.color-choice:hover {
+    cursor: pointer;
+}
+#red {
     background-color: red;
-    height: 80px;
+}
+#orange {
+    background-color: orange;
+}
+#yellow {
+    background-color: yellow;
+}
+#green {
+    background-color: green;
+}
+#blue {
+    background-color: blue;
+}
+#purple {
+    background-color: purple;
+}
+#brown {
+    background-color: brown;
+}
+#black {
+    background-color: black;
+}
+#grey {
+    background-color: grey;
+}
+#white {
+    background-color: #eee;
+}
+#thickness, #opacity {
+    display: inline-block;
+    width: 90px;
+    margin: 3px 5px;
 }
 #game-right {
     float: left;
     width: 200px;
     height: 500px;
+}
+.opth {
+    display: inline-block;
+    font-family: 'Open Sans';
+    font-size: 12px;
+    margin-left: 5px;
 }
 #game-info {
     font-family: 'Open Sans';
@@ -388,6 +445,13 @@ h1 {
     margin: 0 auto;
 }
 #join_room_button input[type=text] {
+    font-family: 'Open Sans';
+    padding: 1px 3px;
+    width: 140px;
+    font-size: 12px;
+    background-color: #eee;
+}
+#submit_phrase input[type=text] {
     font-family: 'Open Sans';
     padding: 1px 3px;
     width: 140px;
