@@ -5,4 +5,3 @@ dj-database-url==0.2.1
 gunicorn==0.17.2
 psycopg2==2.4.6
 wsgiref==0.1.2
-PIL==1.1.7
