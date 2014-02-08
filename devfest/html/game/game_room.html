@@ -22,16 +22,53 @@
 
         <div>
             {% if previous_round_data %}
-                Round Results <br/>
-                {% for drawing in previous_round_data %}
-                    {{ drawing.user.user.username }}
-                    <img src="/{{drawing.picture}}"></img>
-                    {% if drawing.was_round_winner %}
-                        THIS DRAWING WAS THE WINRAR
-                    {% endif %}
-                    <a href="/game/next_round/{{room_name}}/">Go to Next Round</a>
-                    <br/>
-                {% endfor %}
+                        <div id="game-main">
+                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                {% if game_instance.current_phrase %}
+                                <span class="glow">{{game_instance.current_phrase}}</span>
+                                {% else %}
+                                <span class="glow">N/A</span>
+                                {% endif %}
+                            </div>
+                            <div id="game-left-judge">
+                                <form action="/game/judge_drawing/{{room_name}}/" method="post">
+                                    {% csrf_token %}
+                                    {% for drawing in previous_round_data %}
+                                    <div class="user-drawing">
+                                        <div class="drawing-user">
+                                            {{ drawing.user.user.username }} 
+                                        </div>
+                                        
+                                        <a href="/{{drawing.picture}}" data-lightbox="user_drawing"><img class="drawing-thumbnail" src="/{{drawing.picture}}"></img></a>
+
+                                        {% if drawing.was_round_winner %}
+                                            <div class="drawing-pending drawing-submitted"> Winner </div>
+                                        {% else %}   
+                                            <div class="drawing-pending drawing-submitted"> Loser </div>                             
+                                        {% endif %}
+
+                                    </div>
+                                    {% endfor %}
+                                </form>
+                                <div class="clear"></div>
+                                <div class="centered smaller-top-margin"><a class="button" href="/game/next_round/{{room_name}}/">Go to Next Round</a></div>
+                            </div>
+                            <div id="game-right">
+                                <div id="game-info" class="centered">
+                                    <h1>» Players</h1>
+                                    <table id="playerlist">
+                                        {% for user in userlist %}
+                                        <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                        {% endfor %}
+                                    </table>
+                                    <div class="small-top-margin"></div>
+                                    <a class="button" href="/">Back to Home</a>
+                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                </div>
+                                <div id="game-players"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
             {% else %}
                 {% if game_over %}
                     The game has completed. See the final score total above.
@@ -74,7 +111,8 @@
                                                 </div>
                                             {% endfor %}
                                         </form>
-
+                                        <div class="clear"></div>
+                                        <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
                                     </div>
                                     <div id="game-right">
                                         <div id="game-info" class="centered">
@@ -256,10 +294,9 @@
 {% block js %}
     {% if not is_current_judge %}
         <script src="/static/js/canvas.js"></script>
-    {% else %}
-        <script src="/static/js/lightbox-2.6.min.js"></script>
     {% endif %}
-
+    <script src="/static/js/lightbox-2.6.min.js"></script>
+    
     <script>
         $('#join_room_button').submit(function(e){
             e.preventDefault();

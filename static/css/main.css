@@ -393,7 +393,7 @@ h1 {
 }
 #thickness, #opacity {
     display: inline-block;
-    width: 90px;
+    width: 85px;
     margin: 3px 5px;
 }
 #game-right {
@@ -406,6 +406,7 @@ h1 {
     font-family: 'Open Sans';
     font-size: 12px;
     margin-left: 5px;
+    height: 32px;
 }
 #game-info {
     font-family: 'Open Sans';
@@ -476,6 +477,9 @@ h1 {
 }
 .small-top-margin {
     margin-top: 25px;
+}
+.smaller-top-margin {
+    margin-top: 15px;
 }
 .left {
     text-align: left;

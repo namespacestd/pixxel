@@ -48,7 +48,7 @@ def leave_room(request, room_name):
     current_user = UserAccount.get(request.user)
     remove_player(current_user, current_room)
 
-    if current_room.owner == current_user and not current_room.game_started:
+    if (current_room.owner == current_user and not current_room.game_started):
         current_room.delete()
 
     return HttpResponseRedirect('/')
