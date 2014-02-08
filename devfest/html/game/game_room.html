@@ -51,82 +51,85 @@
                     <br/>
                 {% endfor %}
             {% else %}
-
-    {% if game_instance.game_started %}
-            <!-- Judge -->
-                {% if is_current_judge %}
-                    {% if game_instance.current_phrase %}
-                                People Drawing: {{ num_drawing }}
-                                <form action="/game/judge_drawing/{{room_name}}/" method="post">
-                                    {% csrf_token %}
-                                    {% for drawing in user_drawings %}
-                                        <div class="user_drawing">
-                                            {{ drawing.username }} 
-                                            <div class="drawing_image">
-                                                {% if drawing.drawing %}
-                                                    <img src="/{{drawing.drawing.picture}}"> </img>
-                                                {% else %}
-                                                    Blank_image.png
-                                                {% endif %}
-
-                                                {% if all_submitted %}
-                                                    <input type="submit" name="{{drawing.username}}" value="Choose this Drawing"></input>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </form>
-                            {% else %}
-                                <form action="/game/judge_phrase/{{room_name}}/" method="post">
-                                    {% csrf_token %}
-                                    <input type="text" name="judge_phrase" placeholder="Enter Phrase Here"></input>
-                                    <input type="submit" value="Submit Phrase"></input>
-                                </form>
-                            {% endif %}
-                        {% else %}
-                            {% if already_in_game %}
-                                {% if not game_instance.current_phrase %}
-                                    Judge has not yet chosen a phrase.
-                                {% else %}
-                                    {% if not user_drawing %}
-                                        Draw Here
-
-                                        <div id="red">Red</div>
-                                        <div id="blue">Blue</div>
-                                        <div id="clear">Clear</div>
-                                        <div id="opacity"></div>
-                                        <div id="thickness"></div>
-                                        <div id="sketch">
-                                            <canvas id="paint"></canvas>
-                                        </div>
-                                        <form id="submit-drawing-form" action="/game/submit_drawing/{{room_name}}/" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="image_data" id="image_data"></input>
-                                            <input id="submit-drawing" type="submit" class="button"></input>
-                                        </form>
-                                        <!-- <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <input name="drawn_image" type="file" required> </input>
-                                            <input type="submit" value="Submit"> </input>
-                                        </form> -->
-                                    {% else %}
-                                        Your Drawing is Beautiful.
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-                    {% endif %}
-                {% elif is_owner %}
-                    {% if game_startable %}
-                        <a href="/game/start_game/{{room_name}}/" class='button'>Start Game</a>
-                    {% else %}
-                        Waiting for more players...
-                    {% endif %}
-                {% elif already_in_game %}
-                <!-- Leave Room -->
-                <br>
-                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                {% if game_over %}
+                    The game has completed. See the final score total above.
                 {% else %}
-                    Waiting for owner to start game...
+                    {% if game_instance.game_started %}
+                    <!-- Judge -->
+                        {% if is_current_judge %}
+                            {% if game_instance.current_phrase %}
+                                        People Drawing: {{ num_drawing }}
+                                        <form action="/game/judge_drawing/{{room_name}}/" method="post">
+                                            {% csrf_token %}
+                                            {% for drawing in user_drawings %}
+                                                <div class="user_drawing">
+                                                    {{ drawing.username }} 
+                                                    <div class="drawing_image">
+                                                        {% if drawing.drawing %}
+                                                            <img src="/{{drawing.drawing.picture}}"> </img>
+                                                        {% else %}
+                                                            Blank_image.png
+                                                        {% endif %}
+
+                                                        {% if all_submitted %}
+                                                            <input type="submit" name="{{drawing.username}}" value="Choose this Drawing"></input>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </form>
+                                    {% else %}
+                                        <form action="/game/judge_phrase/{{room_name}}/" method="post">
+                                            {% csrf_token %}
+                                            <input type="text" name="judge_phrase" placeholder="Enter Phrase Here"></input>
+                                            <input type="submit" value="Submit Phrase"></input>
+                                        </form>
+                                    {% endif %}
+                                {% else %}
+                                    {% if already_in_game %}
+                                        {% if not game_instance.current_phrase %}
+                                            Judge has not yet chosen a phrase.
+                                        {% else %}
+                                            {% if not user_drawing %}
+                                                Draw Here
+
+                                                <div id="red">Red</div>
+                                                <div id="blue">Blue</div>
+                                                <div id="clear">Clear</div>
+                                                <div id="opacity"></div>
+                                                <div id="thickness"></div>
+                                                <div id="sketch">
+                                                    <canvas id="paint"></canvas>
+                                                </div>
+                                                <form id="submit-drawing-form" action="/game/submit_drawing/{{room_name}}/" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="image_data" id="image_data"></input>
+                                                    <input id="submit-drawing" type="submit" class="button"></input>
+                                                </form>
+                                                <!-- <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <input name="drawn_image" type="file" required> </input>
+                                                    <input type="submit" value="Submit"> </input>
+                                                </form> -->
+                                            {% else %}
+                                                Your Drawing is Beautiful.
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                            {% endif %}
+                        {% elif is_owner %}
+                            {% if game_startable %}
+                                <a href="/game/start_game/{{room_name}}/" class='button'>Start Game</a>
+                            {% else %}
+                                Waiting for more players...
+                            {% endif %}
+                        {% elif already_in_game %}
+                        <!-- Leave Room -->
+                        <br>
+                        <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                        {% else %}
+                            Waiting for owner to start game...
+                        {% endif %}
                 {% endif %}
             {% endif %}
         </div>
