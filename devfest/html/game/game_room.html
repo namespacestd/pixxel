@@ -4,6 +4,7 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/lightbox.css" %}" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 {% endblock %}
 
@@ -100,7 +101,7 @@
                                             {{ drawing.username }} 
                                             <div class="drawing_image">
                                                 {% if drawing.drawing %}
-                                                    <img src="/{{drawing.drawing.picture}}"> </img>
+                                                    <a href="/{{drawing.drawing.picture}}" data-lightbox="user_drawing"><img src="/{{drawing.drawing.picture}}" width="150" height="150"/></a>
                                                 {% else %}
                                                     Blank_image.png
                                                 {% endif %}
@@ -171,5 +172,7 @@
 {% block js %}
     {% if not is_current_judge %}
         <script src="/static/js/canvas.js"></script>
+    {% else %}
+        <script src="/static/js/lightbox-2.6.min.js"></script>
     {% endif %}
 {% endblock %}
