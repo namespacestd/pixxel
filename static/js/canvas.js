@@ -37,7 +37,7 @@ $(document).ready(function() {
         
         h = parseInt(document.getElementById("paint").getAttribute("height"));
         w = parseInt(document.getElementById("paint").getAttribute("width"));
-        ctx.fillStyle = "#eeeeee";
+        ctx.fillStyle = "#ffffff";
         ctx.fillRect(0,0,w,h);
 
         /* Drawing on Paint App */
@@ -135,16 +135,13 @@ $(document).ready(function() {
         $('#image_data').val(dataURL);
     });
     
-    $('#red').click(function() {
-        tmp_ctx.strokeStyle = 'red';
-        tmp_ctx.fillStyle = 'red';
-    });
-    $('#blue').click(function() {
-        tmp_ctx.strokeStyle = 'blue';
-        tmp_ctx.fillStyle = 'blue';
+    $('.color-choice').click(function() {
+        var colorId = $(this).attr('id');
+        tmp_ctx.strokeStyle = colorId;
+        tmp_ctx.fillStyle = colorId;
     });
     
-    $('#clear').click(function() {
+    $('#restart').click(function() {
         ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
     });
 });
