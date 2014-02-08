@@ -304,6 +304,10 @@
                                 {% endif %}
                             {% elif not already_in_game %}
                                 <div class="notice-waiting small-top-margin">Sorry, max number of players in the room has been reached.</div>
+                            {% elif already_in_game %}
+                                <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
+                                <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
                             {% endif %}
                         </div>
                     {% endif %}
