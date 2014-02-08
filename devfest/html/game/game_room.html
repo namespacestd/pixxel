@@ -108,5 +108,7 @@
 {% endblock %}
 
 {% block js %}
-    <script src="/static/js/canvas.js"></script>
+    {% if not is_current_judge %}
+        <script src="/static/js/canvas.js"></script>
+    {% endif %}
 {% endblock %}

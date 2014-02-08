@@ -12,8 +12,9 @@ def new_game(request):
 
 def create_new_room(request):
     if request.method == 'POST':
-        game_name = request.POST['room_name']
+        game_name = request.POST.get('room_name')
         is_private = request.POST.get('is_private')
+        num_rounds = request.POST.get('num_rounds')
         
         if GameInstance.get(game_name):
             return render(request, 'game/game.html', { 'error' : 'already exists' })
@@ -23,6 +24,8 @@ def create_new_room(request):
         current_user = UserAccount.get(request.user)
         new_game.current_judge = current_user
         new_game.owner = current_user
+
+        new_game.num_rounds = int(num_rounds)
 
         if is_private:
             new_game.is_public = False
@@ -139,7 +142,7 @@ def submit_drawing(request, room_name):
 
         #user_drawing = request.FILES['drawn_image']
 
-        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge, phrase=phrase, timestamp = timestamp)
+        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge, phrase=phrase, timestamp=timestamp)
         drawing.save()
         
     return HttpResponseRedirect('/game/room/' + room_name)
@@ -160,7 +163,7 @@ def judge_drawing(request, room_name):
             user.save()
 
         game_room.current_round+=1
-        game_room.current_phrase=None
+        game_room.current_phrase=""
         game_room.save()
         draw_instance.was_round_winner = True
         draw_instance.save()

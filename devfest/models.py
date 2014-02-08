@@ -47,6 +47,8 @@ class GameInstance(models.Model):
     current_phrase = models.CharField(max_length=50, blank=True)
     is_public = models.BooleanField(default=True)
     password = models.CharField(max_length=50, blank=True)
+    game_started = models.BooleanField(default=False)
+    num_rounds = models.IntegerField(default=10)
 
     @staticmethod
     def get(name):
@@ -95,6 +97,7 @@ class DrawInstance(models.Model):
     game = models.ForeignKey(GameInstance)
     round_number = models.IntegerField()
     was_round_winner = models.BooleanField(default=False)
+    timestamp = models.TimeField()
     round_judge = models.ForeignKey(UserAccount,related_name='draw_instance_judge')
     phrase = models.CharField(max_length=50)
     @staticmethod
