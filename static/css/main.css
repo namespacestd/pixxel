@@ -1,22 +1,23 @@
-a { 
-    text-decoration: none;
-}
-
 body {
     background: url('../img/bg.png');
-    margin: 0;
+    margin: 0 0 50px 0;
 }
 
 /*=========
    general
   =========*/
+a:link { text-decoration: none; color: #6399CF; }
+a:visited { text-decoration: none; color: #6399CF; }
+a:active { text-decoration: none; color: #6399CF; }
+a:hover { text-decoration: none; color: #96CEE0; }
+
 .button {
     display: inline-block;
     padding: 5px 15px;
     font-family: 'Belgrano';
     font-size: 14px;
     text-decoration: none;
-    color: black;
+    color: black !important;
     border: 1px solid #111;
     border-radius: 5px;
     margin: 2px;
@@ -44,7 +45,7 @@ h1 {
    intro page
   ============*/
 #intro-wrapper {
-    margin: 0 auto 50px;
+    margin: 0 auto;
     text-align: center;
 }
 #intro-header {
@@ -62,7 +63,7 @@ h1 {
     font-family: 'Belgrano';
     font-size: 16px;
     text-decoration: none;
-    color: black;
+    color: black !important;
     border: 1px solid #111;
     border-radius: 5px;
     margin: 2px;
@@ -217,7 +218,7 @@ h1 {
     font-size: 14px;
     text-decoration: none;
     text-align: center;
-    color: black;
+    color: black !important;
     border: 1px solid #111;
     border-radius: 5px;
     margin: 2px;
@@ -230,6 +231,34 @@ h1 {
 .big-button:hover {
     background-position: 0 0;
     cursor: pointer;
+}
+
+/*=============
+   games stuff
+  =============*/
+#open-games-list {
+    width: 350px;
+    margin: 10px auto 0;
+}
+#create-game-form label {
+    color: #ccc;
+    font-size: 12px;
+    font-family: 'Open Sans';
+}
+#create-game-form table {
+    margin: 20px auto 5px;
+    text-align: right;
+}
+#create-game-form table td {
+    height: 30px;
+}
+#create-game-form input[type=text],
+#create-game-form input[type=password] {
+    font-family: 'Open Sans';
+    padding: 1px 3px;
+    width: 140px;
+    font-size: 12px;
+    background-color: #eee;
 }
 
 /*==============
@@ -261,4 +290,23 @@ h1 {
 .clear {
     clear: both;
 }
-
+.centered {
+    text-align: center;
+}
+.top-margin {
+    margin-top: 35px;
+}
+.small-top-margin {
+    margin-top: 25px;
+}
+.left {
+    text-align: left;
+}
+.center {
+    text-align: center;
+}
+.text {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    color: #ccc;
+}
