@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from devfest.models import GameInstance, UserAccount, ScoreInstance, DrawInstance
+from datetime import datetime
 
 def new_game(request):
     return render(request, 'game/game.html')
@@ -113,10 +114,12 @@ def submit_drawing(request, room_name):
         current_user = UserAccount.get(request.user)
         current_room = GameInstance.get(room_name)
         round_number = current_room.current_round
+        phrase = GameInstance.get(room_name).current_phrase
+        timestamp = datetime.now()
 
         user_drawing = request.FILES['drawn_image']
 
-        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge)
+        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge, phrase=phrase, timestamp = timestamp)
         drawing.save()
         
     return HttpResponseRedirect('/game/room/' + room_name)
