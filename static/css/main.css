@@ -149,14 +149,14 @@ h1 {
 }
 .logo, .logo:visited, .logo:active {
     text-decoration: none;
-    color: #BADCE3;
+    color: #BADCE3 !important;
     font-family: 'Kaushan Script';
     font-size: 36px;
     text-shadow: 1px 1px 3px black;
     transition: 0.33s;
 }
 .logo:hover {
-    color: #eee;
+    color: #eee !important;
 }
 
 /*===========
@@ -325,6 +325,28 @@ h1 {
 .playerlist-right {
     width: 60px;
     text-align: center;
+}
+#playerlist-waiting {
+    margin: 5px auto 0;
+    width: 200px;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+    font-family: 'Open Sans';
+    color: #ccc;
+    font-size: 12px;
+    padding: 15px;
+}
+.notice-waiting {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    color: #ccc;
+    font-style: italic;
+    text-align: center;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+    padding: 15px;
+    width: 200px;
+    margin: 0 auto;
 }
 
 /*===============
