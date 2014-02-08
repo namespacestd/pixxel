@@ -46,13 +46,20 @@ def open_games(request):
 def leave_room(request, room_name):
     current_room = GameInstance.get(room_name)
     current_user = UserAccount.get(request.user)
+    if (current_user == current_room.current_judge):
+        choose_next_judge(current_room)
     current_room.users.remove(current_user)
+    if (len(current_room.users.all()) < 2):
+        current_room.delete()
     return HttpResponseRedirect('/')
 
 
 def game_room(request, room_name):
-    current_room = GameInstance.get(room_name)
-    userlist = current_room.users.all()
+    try:
+        current_room = GameInstance.get(room_name)
+        userlist = current_room.users.all()
+    except:
+        return HttpResponseRedirect('/')
     already_in_game = None
     current_judge = None
     user_drawing = None
