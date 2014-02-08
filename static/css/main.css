@@ -1,0 +1,548 @@
+body {
+    background: url('../img/bg.png');
+    margin: 0 0 50px 0;
+}
+
+/*=========
+   general
+  =========*/
+a:link { text-decoration: none; color: #6399CF; }
+a:visited { text-decoration: none; color: #6399CF; }
+a:active { text-decoration: none; color: #6399CF; }
+a:hover { text-decoration: none; color: #96CEE0; }
+
+.button {
+    display: inline-block;
+    padding: 5px 15px;
+    font-family: 'Belgrano';
+    font-size: 14px;
+    text-decoration: none;
+    color: black !important;
+    border: 1px solid #111;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(#A0C6F2, #456C99);
+    background-size: auto 200%;
+    background-position: 0 100%;
+    transition: background-position 0.33s;
+    outline: none;
+}
+.button:hover {
+    background-position: 0 0;
+    cursor: pointer;
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+    color: #ccc;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: normal;
+}
+
+/*============
+   intro page
+  ============*/
+#intro-wrapper {
+    margin: 0 auto;
+    text-align: center;
+}
+#intro-header {
+    font-family: 'Kaushan Script';
+    font-size: 120px;
+    color: #BADCE3;
+    text-shadow: 3px 3px 5px black;
+    margin-top: 30px;
+    padding-right: 30px;
+}
+.intro-button {
+    display: inline-block;
+    width: 130px;
+    padding: 10px;
+    font-family: 'Belgrano';
+    font-size: 16px;
+    text-decoration: none;
+    color: black !important;
+    border: 1px solid #111;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(#A0C6F2, #456C99);
+    background-size: auto 200%;
+    background-position: 0 100%;
+    transition: background-position 0.33s;
+    outline: none;
+}
+.intro-button.enabled:hover {
+    background-position: 0 0;
+    cursor: pointer;
+}
+.intro-button.disabled {
+    opacity: 0.4;
+}
+#intro-desc {
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-family: 'Belgrano';
+    font-size: 12px;
+    color: #ccc;
+}
+#login-form-wrapper, #signup-form-wrapper {
+    display: none;
+    margin-top: 15px;
+    position: relative;
+}
+#login-form table, #signup-form table {
+    margin: 20px auto 5px;
+    text-align: right;
+}
+#login-form label, #signup-form label {
+    color: #ccc;
+    font-size: 12px;
+    font-family: 'Open Sans';
+}
+#login-form input[type=text], #signup-form input[type=text],
+#login-form input[type=password], #signup-form input[type=password] {
+    font-family: 'Open Sans';
+    padding: 1px 3px;
+    width: 140px;
+    font-size: 12px;
+    background-color: #eee;
+}
+.error {
+    margin-top: 15px;
+    font-size: 12px;
+    font-family: 'Open Sans';
+    color: #D43D3D;
+    text-align: center;
+}
+.errorlist {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px;
+}
+.errorlist .errorlist li:before {
+    content: ' » ';
+}
+
+/*========
+   header
+  ========*/
+#header-outer {
+    height: 60px;
+    background-color: rgba(60,120,220,0.2);
+    box-shadow: 0 0 5px black;
+}
+#header-inner {
+    width: 800px;
+    margin: 0 auto;
+}
+#header-left {
+    float: left;
+    padding-top: 3px;
+}
+#header-right {
+    float: right;
+    padding-top: 13px;
+}
+.logo, .logo:visited, .logo:active {
+    text-decoration: none;
+    color: #BADCE3 !important;
+    font-family: 'Kaushan Script';
+    font-size: 36px;
+    text-shadow: 1px 1px 3px black;
+    transition: 0.33s;
+}
+.logo:hover {
+    color: #eee !important;
+}
+
+/*===========
+   main page
+  ===========*/
+#main {
+    width: 800px;
+    margin: 0 auto;
+}
+#main-left {
+    float: left;
+    width: 430px;
+    margin-top: 45px;
+    margin-right: 10px;
+    text-align: center;
+}
+#main-right {
+    float: right;
+    width: 270px;
+    margin-top: 35px;
+    margin-right: 50px;
+}
+.notice {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    color: #ccc;
+    font-style: italic;
+    text-align: center;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+    padding: 15px;
+}
+#games-list {
+    margin-top: 10px;
+}
+.games-list-game {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    margin: 5px 0;
+    padding: 10px;
+    line-height: 175%;
+    font-family: 'Open Sans';
+    color: #ccc !important;
+    background-color: rgba(120,120,120,0.1);
+    border: 1px solid #111;
+    transition: 0.33s;
+}
+.games-list-game:hover {
+    box-shadow: 0 0 5px black;
+    cursor: pointer;
+    background-color: rgba(220,220,220,0.1);
+}
+.big-button {
+    display: inline-block;
+    padding: 25px 0;
+    width: 300px;
+    font-family: 'Belgrano';
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    color: black !important;
+    border: 1px solid #111;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(#A0C6F2, #456C99);
+    background-size: auto 200%;
+    background-position: 0 100%;
+    transition: background-position 0.33s;
+    outline: none;
+}
+.big-button:hover {
+    background-position: 0 0;
+    cursor: pointer;
+}
+
+/*=============
+   games stuff
+  =============*/
+#open-games-list {
+    width: 350px;
+    margin: 10px auto 0;
+}
+#create-game-form label {
+    color: #ccc;
+    font-size: 12px;
+    font-family: 'Open Sans';
+}
+#create-game-form table {
+    margin: 20px auto 5px;
+    text-align: right;
+}
+#create-game-form table td {
+    height: 30px;
+}
+#create-game-form input[type=text],
+#create-game-form input[type=password] {
+    font-family: 'Open Sans';
+    padding: 1px 3px;
+    width: 140px;
+    font-size: 12px;
+    background-color: #eee;
+}
+
+/*==============
+   canvas stuff
+  ==============*/
+#sketch {
+    /*width: 500px;*/
+    height: 466px;
+    background: #fff;
+    position: relative;
+}
+#tmp_canvas {
+    position: absolute;
+    left: 0px; right: 0;
+    bottom: 0; top: 0;
+}
+
+/*===========
+   game room
+  ===========*/
+#top-info {
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Open Sans';
+    color: #ccc;
+    margin-bottom: 10px;
+}
+#game-main {
+    width: 800px;
+    margin: 25px auto 0;
+}
+#game-left-judge {
+    float: left;
+    width: 580px;
+    height: 500px;
+    margin-right: 19px;
+    padding: 0px .5px;
+}
+
+#game-left {
+    float: left;
+    width: 578px;
+    height: 500px;
+    margin-right: 20px;
+    border: 1px solid #111;
+}
+.user-drawing {
+    float: left;
+    margin: 0px 12px;
+    margin-top: 25px;
+    width: 169px;
+    height: 212.5px;
+    text-align: center;
+
+}
+.drawing-user {
+    text-align: center;
+    font-family: 'Open Sans';
+    font-size: 16px;
+    margin-top: 5px;
+    margin-bottom: 8px;
+    color: #ccc;
+    text-shadow: 1px 1px 3px black;
+}
+.drawing-thumbnail {
+    background-color: white;
+    width: 169px;
+    height: 136.29px;
+}
+.drawing-submit {
+    font-family: 'Open Sans';
+    margin-top: 8px;
+    font-size: 13px;
+}
+.drawing-pending {
+    font-family: 'Open Sans';
+    color: #ccc;
+    margin-top: 8px;
+    font-size: 13px;
+}
+.drawing-pending.drawing-submitted {
+    margin-top: 4px;
+}
+
+.winner {
+    color: #5CBD44;
+}
+.loser {
+    color: #D43D3D;
+}
+
+#game-tools {
+    height: 25px;
+    background-color: #eee;
+    padding: 4px 8px;
+    border-bottom: 1px solid #111;
+}
+.color-choice {
+    display: inline-block;
+    margin: 0 2px 0 0;
+    height: 20px;
+    width: 20px;
+    border: 1px solid #111;
+    opacity: 0.9;
+}
+.color-choice:hover {
+    cursor: pointer;
+}
+#red {
+    background-color: red;
+}
+#orange {
+    background-color: orange;
+}
+#yellow {
+    background-color: yellow;
+}
+#green {
+    background-color: green;
+}
+#blue {
+    background-color: blue;
+}
+#purple {
+    background-color: purple;
+}
+#brown {
+    background-color: brown;
+}
+#black {
+    background-color: black;
+    box-shadow: 0 0 0px 2px black;
+    opacity: 1.0;
+}
+#grey {
+    background-color: grey;
+}
+#white {
+    background-color: white;
+}
+#thickness, #opacity {
+    display: inline-block;
+    width: 85px;
+    margin: 3px 5px;
+}
+#game-right {
+    float: left;
+    width: 200px;
+    height: 500px;
+}
+.opth {
+    display: inline-block;
+    font-family: 'Open Sans';
+    font-size: 12px;
+    margin-left: 5px;
+    height: 32px;
+}
+#game-info {
+    font-family: 'Open Sans';
+    color: #ccc;
+    font-size: 12px;
+}
+#playerlist {
+    margin: 5px auto 0;
+    padding: 5px 0;
+    width: 100%;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+}
+.playerlist-right {
+    width: 60px;
+    text-align: center;
+}
+#playerlist-waiting {
+    margin: 5px auto 0;
+    width: 200px;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+    font-family: 'Open Sans';
+    color: #ccc;
+    font-size: 12px;
+    padding: 15px;
+}
+.notice-waiting {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    color: #ccc;
+    font-style: italic;
+    text-align: center;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+    padding: 15px;
+    width: 200px;
+    margin: 0 auto;
+}
+#join_room_button input[type=text] {
+    font-family: 'Open Sans';
+    padding: 1px 3px;
+    width: 140px;
+    font-size: 12px;
+    background-color: #eee;
+}
+#submit_phrase input[type=text] {
+    font-family: 'Open Sans';
+    padding: 1px 3px;
+    width: 140px;
+    font-size: 12px;
+    background-color: #eee;
+}
+#game-over {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*===============
+   miscellaneous
+  ===============*/
+.unclickable {
+    pointer-events: none;
+}
+.clear {
+    clear: both;
+}
+.centered {
+    text-align: center;
+}
+.top-margin {
+    margin-top: 35px;
+}
+.small-top-margin {
+    margin-top: 25px;
+}
+.smaller-top-margin {
+    margin-top: 15px;
+}
+.left {
+    text-align: left;
+}
+.center {
+    text-align: center;
+}
+.text {
+    font-family: 'Open Sans';
+    font-size: 12px;
+    color: #ccc;
+}
+.login-name {
+    font-family: 'Belgrano';
+    display: inline;
+    color: #ccc;
+    text-shadow: 1px 1px 3px black;
+}
+.glow {
+    font-weight: bold;
+    text-shadow: 1px 1px 3px black;
+}
+.small {
+    font-size: 12px;
+    color: #aaa;
+}
+.wtf {
+    font-size: 12px;
+    color: #aaa;
+    font-style: italic;
+}
+
+.choose-drawing-button {
+    display: inline-block;
+    padding: 5px 15px;
+    font-family: 'Belgrano';
+    font-size: 14px;
+    text-decoration: none;
+    color: black !important;
+    border: 1px solid #111;
+    border-radius: 5px;
+    margin: 2px;
+    background-image: linear-gradient(#A0C6F2, #456C99);
+    background-size: auto 200%;
+    background-position: 0 100%;
+    transition: background-position 0.33s;
+    outline: none;
+}
+.choose-drawing-button:hover {
+    background-position: 0 0;
+    cursor: pointer;
+}

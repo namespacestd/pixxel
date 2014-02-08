@@ -1,0 +1,6 @@
+
+static/img/user_pictures
+*.py~
+*.pyc
+local.sqlite
+log.log

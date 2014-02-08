@@ -1,0 +1,347 @@
+
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/lightbox.css" %}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+{% endblock %}
+
+{% block content %}
+    {% include 'main/header.html' %}
+
+    <div class="top-margin">
+        <!-- <div class="section_title"> Room: {{ room_name }} </div>
+        <div class="section_title"> Current Judge: {{ game_instance.current_judge.user.username }} </div>
+        <div class="section_title"> Is Public: {{game_instance.is_public}} </div>
+        <div class="section_title"> Password: {{game_instance.password}} </div>
+        <div class="section_title"> Current Phrase: {{game_instance.current_phrase}}</div>
+        <div class="section_title"> Game Started: {{game_instance.game_started}}</div>
+        <div class="section_title"> Max Players: {{game_instance.max_players}}</div> -->
+
+        <div>
+            {% if previous_round_data %}
+                        <div id="game-main">
+                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                {% if game_instance.current_phrase %}
+                                <span class="glow">{{game_instance.current_phrase}}</span>
+                                {% else %}
+                                <span class="glow">N/A</span>
+                                {% endif %}
+                            </div>
+                            <div id="game-left-judge">
+                                <form action="/game/judge_drawing/{{room_name}}/" method="post">
+                                    {% csrf_token %}
+                                    {% for drawing in previous_round_data %}
+                                    <div class="user-drawing">
+                                        <div class="drawing-user">
+                                            {{ drawing.user.user.username }} 
+                                        </div>
+                                        
+                                        <a href="/{{drawing.picture}}" data-lightbox="user_drawing"><img class="drawing-thumbnail" src="/{{drawing.picture}}"></img></a>
+
+                                        {% if drawing.was_round_winner %}
+                                            <div class="drawing-pending drawing-submitted winner"> Winner </div>
+                                        {% else %}   
+                                            <div class="drawing-pending drawing-submitted loser"> Loser </div>                             
+                                        {% endif %}
+
+                                    </div>
+                                    {% endfor %}
+                                </form>
+                                <div class="clear"></div>
+                                <div class="centered smaller-top-margin"><a class="button" href="/game/next_round/{{room_name}}/">Go to Next Round</a></div>
+                            </div>
+                            <div id="game-right">
+                                <div id="game-info" class="centered">
+                                    <h1>» Players</h1>
+                                    <table id="playerlist">
+                                        {% for user in userlist %}
+                                        <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                        {% endfor %}
+                                    </table>
+                                    <div class="small-top-margin"></div>
+                                    <a class="button" href="/">Back to Home</a>
+                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                </div>
+                                <div id="game-players"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+            {% else %}
+                {% if game_over %}
+                    <div id="game-main">
+                        <div id="top-info">
+                        </div>
+                        <div id="game-over">
+                            <div id="game-info">
+                                <div class="centered"><h1>» Final Scores </h1></div>
+                                <table id="playerlist">
+                                    {% for user in userlist %}
+                                    <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                    {% endfor %}
+                                </table>
+                                <div class="small-top-margin"></div>
+                                <div class="centered">
+                                    <a class="button" href="/">Back to Home</a>
+                                </div>
+                            </div>
+                            <div id="game-players"></div>
+                        </div>
+                        <div id="game-right">
+                            
+                        </div>
+                        <div class="clear"></div>
+                    </div>  
+                {% else %}
+                    {% if game_instance.game_started %}
+                    <!-- Judge -->
+                        {% if is_current_judge %}
+                            {% if game_instance.current_phrase %}
+                                <div id="game-main">
+                                    <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                        {% if game_instance.current_phrase %}
+                                        <span class="glow">{{game_instance.current_phrase}}</span>
+                                        {% else %}
+                                        <span class="glow">N/A</span>
+                                        {% endif %}
+                                    </div>
+                                    <div id="game-left-judge">
+                                        <form action="/game/judge_drawing/{{room_name}}/" method="post">
+                                            {% csrf_token %}
+                                            {% for drawing in user_drawings %}
+                                                <div class="user-drawing">
+                                                    <div class="drawing-user">
+                                                        {{ drawing.username }} 
+                                                    </div>
+                                                    {% if drawing.drawing %}
+                                                        <a href="/{{drawing.drawing.picture}}" data-lightbox="user_drawing"><img class="drawing-thumbnail" src="/{{drawing.drawing.picture}}"></img></a>
+                                                    {% else %}
+                                                        <div class="drawing-thumbnail"></div>
+                                                    {% endif %}
+
+                                                    {% if all_submitted %}
+                                                        <input class="choose-drawing-button drawing-submit" type="submit" name="{{drawing.username}}" value="Choose Drawing"></input>
+                                                    {% elif not drawing.drawing %}
+                                                        <div class="drawing-pending"> Waiting for Submission... </div>
+                                                    {% else %}
+                                                        <div class="drawing-pending drawing-submitted"> Submitted </div>                                       
+                                                    {% endif %}
+
+                                                </div>
+                                            {% endfor %}
+                                        </form>
+                                        <div class="clear"></div>
+                                        <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                    </div>
+                                    <div id="game-right">
+                                        <div id="game-info" class="centered">
+                                            <h1>» Players</h1>
+                                            <table id="playerlist">
+                                                {% for user in userlist %}
+                                                <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                                {% endfor %}
+                                            </table>
+                                            <div class="small-top-margin"></div>
+                                            <a class="button" href="/">Back to Home</a>
+                                            <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                        </div>
+                                        <div id="game-players"></div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>                                
+                            {% else %}
+                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                    {% if game_instance.current_phrase %}
+                                        <span class="glow">{{game_instance.current_phrase}}</span>
+                                    {% else %}
+                                        <span class="glow">N/A</span>
+                                    {% endif %}
+                                </div>
+                                <form id="submit_phrase" action="/game/judge_phrase/{{room_name}}/" method="post">
+                                    {% csrf_token %}
+                                    <div class="notice-waiting small-top-margin">You are the judge.<br>Please submit the phrase.</div>
+                                    <div class="centered small-top-margin"><input type="text" name="judge_phrase" placeholder="Enter Phrase Here"></input><br>
+                                    <input type="submit" class="button" value="Submit"></input>
+                                    </div>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            {% if already_in_game %}
+                                {% if not game_instance.current_phrase %}
+                                    <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                        {% if game_instance.current_phrase %}
+                                            <span class="glow">{{game_instance.current_phrase}}</span>
+                                        {% else %}
+                                            <span class="glow">N/A</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="notice-waiting small-top-margin">Judge has not yet chosen a phrase.</div>
+                                    <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                {% else %}
+                                    {% if not user_drawing %}
+                                        
+                                        <div id="game-main">
+                                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                                {% if game_instance.current_phrase %}
+                                                    <span class="glow">{{game_instance.current_phrase}}</span>
+                                                {% else %}
+                                                    <span class="glow">N/A</span>
+                                                {% endif %}
+                                            </div>
+                                            <div id="game-left">
+                                                <div id="game-tools">
+                                                    <div class="color-choice" id="red"></div>
+                                                    <div class="color-choice" id="orange"></div>
+                                                    <div class="color-choice" id="yellow"></div>
+                                                    <div class="color-choice" id="green"></div>
+                                                    <div class="color-choice" id="blue"></div>
+                                                    <div class="color-choice" id="purple"></div>
+                                                    <div class="color-choice" id="brown"></div>
+                                                    <div class="color-choice" id="black"></div>
+                                                    <div class="color-choice" id="grey"></div>
+                                                    <div class="color-choice" id="white"></div>
+                                                    <div class="opth">Opac. <div id="opacity"></div>
+                                                    Thick. <div id="thickness"></div></div>
+                                                </div>
+                                                <div id="sketch">
+                                                    <canvas id="paint"></canvas>
+                                                </div>
+
+                                                <div class="centered">
+                                                    <form id="submit-drawing-form" action="/game/submit_drawing/{{room_name}}/" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="image_data" id="image_data"></input>
+                                                        <a class="button" id="restart">Restart</a>
+                                                        <input id="submit-drawing" type="submit" class="button" value="Submit"></input>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                            <div id="game-right">
+                                                <div id="game-info" class="centered">
+                                                    <h1>» Players</h1>
+                                                    <table id="playerlist">
+                                                        {% for user in userlist %}
+                                                            <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                    <div class="small-top-margin"></div>
+                                                    <a class="button" href="/">Back to Home</a>
+                                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                                </div>
+                                                <div id="game-players"></div>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                                <!-- <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <input name="drawn_image" type="file" required> </input>
+                                                    <input type="submit" value="Submit"> </input>
+                                                </form> -->
+                                    {% else %}
+                                        <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                            {% if game_instance.current_phrase %}
+                                                <span class="glow">{{game_instance.current_phrase}}</span>
+                                            {% else %}
+                                                <span class="glow">N/A</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="notice-waiting small-top-margin">Your drawing has been submitted.<br>Waiting for judge to choose winner...</div>
+                                        <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% elif is_owner %}
+                        {% if game_startable %}
+                            <div class="centered text">
+                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
+                                <h1>» Players</h1>
+                                    {% for user in userlist %}
+                                        <span class="wtf">{{ user.username }}</span><br>
+                                    {% endfor %}
+                                <a href="/game/start_game/{{room_name}}/" class="button small-top-margin">Start Game</a><br>
+                                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                            </div>
+                        {% else %}
+                            <div class="centered text">
+                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
+                                <h1>» Players</h1>
+                                    {% for user in userlist %}
+                                        <span class="wtf">{{ user.username }}</span><br>
+                                    {% endfor %}
+                                <div class="notice-waiting small-top-margin">Waiting for more players...</div>
+                                <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="centered text">
+                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
+                            <h1>» Players</h1>
+                                {% for user in userlist %}
+                                    <span class="wtf">{{ user.username }}</span><br>
+                                {% endfor %}
+                            {% if open_slots %}
+                                {% if already_in_game %}
+                                    <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
+                                    <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                {% elif not game_instance.game_started and not already_in_game %}
+                                    <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
+                                        {% csrf_token %}
+                                        {% if not game_instance.is_public %} 
+                                            <div class="notice-waiting small-top-margin">This room is private. Please enter the password.</div>
+                                            <input type="text" name="room_password" placeholder='Password' required></input>
+                                            <div class="error"></div>
+                                        {% endif %} 
+                                        <div class="centered small-top-margin">
+                                            <input type="submit" class="button" value="Join Room">
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            {% elif not already_in_game %}
+                                <div class="notice-waiting small-top-margin">Sorry, max number of players in the room has been reached.</div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+                <!-- <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a> -->
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {% if not is_current_judge %}
+        <script src="/static/js/canvas.js"></script>
+    {% endif %}
+    <script src="/static/js/lightbox-2.6.min.js"></script>
+    
+    <script>
+        $('#join_room_button').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                method: 'POST',
+                url: '/game/room/join_game/{{room_name}}/',
+                data: $(this).serialize(),
+                success: function(data) {
+                    if (data == 'Success') {
+                        location.reload();
+                    }
+                    else {
+                        $('#join_room_button .error').html(data);
+                    }
+                },
+                error: function() {
+                    alert('Unable to reach server. Please check your internet connection and try again.');
+                }
+            });
+        });
+        $('#refresh').click(function() {
+            location.reload();
+        });
+    </script>
+{% endblock %}

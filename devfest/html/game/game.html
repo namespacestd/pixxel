@@ -1,0 +1,55 @@
+
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    {% include 'main/header.html' %}
+    <div class="centered top-margin">
+        <h1>» Create New Game</h1>
+        <form id="create-game-form" method="post" action="/game/create_new_room/">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><label>Game Name:</label></td>
+                    <td><input type="text" name="room_name" required></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Game Password:</label>
+                    </td>
+                    <td>
+                        <input id="room_password" type="text" name="room_password"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text"><i>(Leave blank to create public game)</i></td>
+                </tr>
+                <tr>
+                    <td><label>Number of Rounds:</label></td>
+                    <td class="text">
+                        <input type="radio" name="num_rounds" value="1"> 1
+                        <input type="radio" name="num_rounds" value="3"> 3
+                        <input type="radio" name="num_rounds" value="5" checked> 5
+                        <input type="radio" name="num_rounds" value="10"> 10
+                    </td>
+                </tr>
+            </table>
+            <div class="small-top-margin"></div>
+            <input type="submit" class="button" value="Submit">
+            <a class="button" href="/">Back</a>
+            </table>
+        </form>
+    </div>
+
+    {% if error %}
+        A game room with that name already exists.
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            $("input:text:visible:first").focus();
+        })
+    </script>
+{% endblock %}

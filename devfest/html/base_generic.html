@@ -1,0 +1,24 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pixxel</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}" />
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans|Kaushan+Script|Orbitron|Belgrano' rel='stylesheet' type='text/css'>
+
+    {% block css %}{% endblock %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+
+    <!-- jQuery -->
+    <script src="{% static "js/jquery-1.10.2.min.js" %}"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    {% block js %}{% endblock %}
+</body>
+</html>

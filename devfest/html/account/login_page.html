@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <div id="form-wrapper">
+        <form id="loginForm" method="post" action="/account/login/">
+            {% csrf_token %}
+            <h1>Login</h1>
+            <table>
+                <tr>
+                    <td><label>{{ login_form.username.label_tag }}:</label></td>
+                    <td><label>{{ login_form.username }}</label></td>
+                </tr>
+                <tr>
+                    <td>{{ login_form.password.label_tag }}:</td>
+                    <td>{{ login_form.password }}</td>
+                </tr>
+            </table>
+            <input type="submit" class="button" value="Log In">
+
+            <div class="error"></div>
+        </form>
+    </div>    
+{% endblock %}

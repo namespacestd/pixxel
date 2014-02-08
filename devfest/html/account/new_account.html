@@ -1,0 +1,42 @@
+
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
+{% endblock %}
+
+{% block content %}
+   
+ <form id="signupForm" method="post" action="/account/create/">
+        {% csrf_token %}
+
+        <h1>Sign Up</h1>
+
+        <div>
+            <label>E-mail Address:</label><br/>
+            {{ signup_form.email_address }}
+        </div>
+
+        <div>
+            <label>Username:</label><br/>
+            {{ signup_form.username }}
+        </div>
+
+        <div>
+            <label>Password:</label><br/>
+            {{ signup_form.password1 }}
+        </div>
+
+        <div>
+            <label>Confirm Password:</label><br/>
+            {{ signup_form.password2 }}
+        </div>
+        <div class="centered-text top-margin">
+            <button type="submit">Sign Up</button>
+        </div>
+        <div class="error top-margin"></div>
+    </form>
+
+    {{ errors }}
+{% endblock %}

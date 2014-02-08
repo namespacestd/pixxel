@@ -1,0 +1,98 @@
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    {% if not is_authenticated %}
+        <div id="intro-wrapper">
+            <div id="intro-header">
+                PixxeL
+            </div>
+            <div id="intro-desc">
+                Pixxel is a multiplayer drawing game where you compete against your friends.
+                <br>Created for DevFest 2014 at Columbia University.
+            </div>
+            <a class="intro-button enabled" id="login-btn">Log In</a>
+            <a class="intro-button enabled" id="signup-btn">Sign Up</a>
+            <div id="login-form-wrapper">
+                <form id="login-form" method="post" action="/account/login/">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td><label>Username:</label></td>
+                            <td>{{ login_form.username }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Password:</label></td>
+                            <td>{{ login_form.password }}</td>
+                        </tr>
+                    </table>
+                    <input type="submit" class="button" value="Submit">
+                    <div class="error"></div>
+                </form>
+            </div>
+            <div id="signup-form-wrapper">
+                <form id="signup-form" method="post" action="/account/create/">
+                    {% csrf_token %}
+
+                    <table>
+                        <tr>
+                            <td><label>E-mail address:</label></td>
+                            <td>{{ signup_form.email_address }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Username:</label></td>
+                            <td>{{ signup_form.username }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Password:</label></td>
+                            <td>{{ signup_form.password1 }}</td>
+                        </tr>
+                        <tr>
+                            <td><label>Confirm password:</label></td>
+                            <td>{{ signup_form.password2 }}</td>
+                        </tr>
+                    </table>
+                    <input type="submit" class="button" value="Submit">
+                    <div class="error"></div>
+                </form>
+            </div>
+
+    {{ errors }}
+        </div>
+    {% else %}
+        {% include 'main/header.html' %}
+
+        <div id="main">
+            <div id="main-left">
+                <a class="big-button" href="/game/open_games/">Join Game</a>
+                <a class="big-button" href="/game/new_game/">Create New Game</a>
+            </div>
+            <div id="main-right">
+                <h1>» Current Games</h1>
+                <div id="games-list">
+                    {% if current_games %}
+                        {% for game in current_games %}
+                            <a href="/game/room/{{game.game_room_name}}/" class="games-list-game">{{game.game_room_name}}</a>
+                        {% endfor %}
+                    {% else %}
+                        <div class="notice">You are currently not in any games.<br/>Click the buttons to join or create one.</div>
+                    {% endif %}
+                </div>
+                <br/>
+                <h1>» Completed Games</h1>
+                <div id="games-list">
+                    {% if completed_games %}
+                        {% for game in completed_games %}
+                            <a href="/game/room/{{game.game_room_name}}/" class="games-list-game">{{game.game_room_name}}</a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/intro.js"></script>
+{% endblock %}

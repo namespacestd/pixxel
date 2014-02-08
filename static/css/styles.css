@@ -1,0 +1,93 @@
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    font:20px 'Raleway', serif;
+    font-weight: 100;
+}
+
+#one {
+    background-color: red;
+    width: 50%; 
+}
+
+#title {
+    font-size: 50px;
+    width: 25%;
+    float: left;
+}
+
+.menu_button {
+    float: right;
+    border: 2px solid black;
+    margin-right: 5px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-left: 25px;
+}
+#menu {
+    border-bottom: 2px solid black;
+    height: 60px;
+}
+
+#start_new_game, #join_game {
+    font-size: 75px;
+    border: 2px solid black;
+    border-radius: 20px;
+    display: inline-block; 
+    padding: 15px;
+    margin: 25px;
+}
+
+#game_menu {
+    width: 50%;
+    text-align: center;
+    margin-top: 130px;
+    float: left;
+}
+
+#user_panel {
+    float: right;
+    line-height: 60px;
+    font-size: 35px;
+}
+
+#current_games {
+    float: right;
+    text-align: center;
+    margin: 45px 25px;
+}
+
+.content_title {
+    font-size: 35px;
+}
+
+.game_entry {
+    font-size: 25px;
+    margin: 10px auto;
+}
+.section_title {
+    font-size: 40px;
+    text-align: center;
+    margin: 10px 0;
+}
+
+#current_room_users {
+    width: 300px;
+    text-align: center;
+}
+#join_room_button {
+    text-align: center;
+}
+
+.open_game_item {
+    font-size: 30px;
+    text-align: center;
+}
