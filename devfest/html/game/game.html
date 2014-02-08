@@ -2,25 +2,44 @@
 {% extends "base_generic.html" %}
 {% load staticfiles %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
-{% endblock %}
-
 {% block content %}
     {% include 'main/header.html' %}
-    <form action="/game/create_new_room" method="post">
-        {% csrf_token %}
-        <input type="text" name="room_name" placeholder="Room Name" required></input>
-        <input id='is_private' type="checkbox" name="is_private" value="is_private">Private</input>
-        <input id='room_password' type="text" name="room_password" style="display: none;" placeholder="Room Password"></input>
-        <select name="num_rounds">
-            <option value="1">One</option>
-            <option value="3">Three</option>
-            <option value="5">Five</option>
-            <option value="10">Ten</option>
-        </select>
-        <input type="submit" value="Create Room"></input>
-    </form>
+    <div class="centered top-margin">
+        <h1>» Create New Game</h1>
+        <form id="create-game-form" method="post" action="/game/create_new_room/">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td><label>Game Name:</label></td>
+                    <td><input type="text" name="room_name" required></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Game Password:</label>
+                    </td>
+                    <td>
+                        <input id="room_password" type="text" name="room_password"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text"><i>(Leave blank to create public game)</i></td>
+                </tr>
+                <tr>
+                    <td><label>Number of Rounds:</label></td>
+                    <td class="text">
+                        <input type="radio" name="num_rounds" value="1"> 1
+                        <input type="radio" name="num_rounds" value="3"> 3
+                        <input type="radio" name="num_rounds" value="5"> 5
+                        <input type="radio" name="num_rounds" value="10"> 10
+                    </td>
+                </tr>
+            </table>
+            <div class="small-top-margin"></div>
+            <a class="button" href="/">Back</a>
+            <input type="submit" class="button" value="Submit">
+            </table>
+        </form>
+    </div>
 
     {% if error %}
         A game room with that name already exists.
@@ -30,16 +49,7 @@
 {% block js %}
     <script>
         $(document).ready(function() {
-            $('#is_private').click(function() {
-                if($('#is_private').prop('checked')) {
-                    $('#room_password').show();
-                    $('#room_password').attr('required', true);
-                }
-                else {
-                    $('#room_password').hide();
-                    $('#room_password').removeAttr('required', false);
-                }
-            });
-        });
+            $("input:text:visible:first").focus();
+        })
     </script>
 {% endblock %}

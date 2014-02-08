@@ -13,7 +13,7 @@ def new_game(request):
 def create_new_room(request):
     if request.method == 'POST':
         game_name = request.POST.get('room_name')
-        is_private = request.POST.get('is_private')
+        is_private = request.POST.get('room_password')
         num_rounds = request.POST.get('num_rounds')
         
         if GameInstance.get(game_name):
@@ -29,7 +29,7 @@ def create_new_room(request):
 
         if is_private:
             new_game.is_public = False
-            new_game.password = request.POST['room_password']
+            new_game.password = is_private
 
         new_game.save()
         join_game_helper(current_user, game_name)

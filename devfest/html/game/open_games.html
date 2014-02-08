@@ -2,16 +2,30 @@
 {% extends "base_generic.html" %}
 {% load staticfiles %}
 
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}" />
-{% endblock %}
-
 {% block content %}
     {% include 'main/header.html' %}
-    <div class="content">
-        <div class="section_title"> Open Games </div>
-        {% for game in open_games %}
-            <a href="/game/room/{{game.game_room_name}}"><div class="open_game_item"> {{ game.game_room_name }}</div></a>
-        {% endfor %}
+    <div class="centered top-margin">
+        <h1>» Open Games</h1>
+        <div id="open-games-list">
+        {% if open_games %}
+            {% for game in open_games %}
+                <a class="games-list-game" href="/game/room/{{game.game_room_name}}">{{ game.game_room_name }}</a>
+            {% endfor %}
+        {% else %}
+            <div class="notice">There are currently no open games.<br>Would you like to <a href="/game/new_game/">create one</a>?</div>
+        {% endif %}
+        </div>
+        <div class="small-top-margin">
+            <a href="/" class="button">Back</a>
+            <a class="button" id="refresh">Refresh</a>
+        </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#refresh').click(function() {
+            location.reload();
+        });
+    </script>
 {% endblock %}
