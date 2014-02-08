@@ -41,6 +41,7 @@
                     <br/>
                 {% endfor %}
             {% else %}
+            <!-- Judge -->
                 {% if is_current_judge %}
                     {% if game_instance.current_phrase %}
 
@@ -72,6 +73,9 @@
                             <input type="submit" value="Submit Phrase"></input>
                         </form>
                     {% endif %}
+                <!-- Leave Room -->
+                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                <!-- Player -->
                 {% else %}
                     {% if already_in_game %}
                         {% if not game_instance.current_phrase %}
@@ -103,6 +107,8 @@
                             {% endif %}
                         {% endif %}
                     {% endif %}
+                <!-- Leave Room -->
+                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
                 {% endif %}
             {% endif %}
         </div>
