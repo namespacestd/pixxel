@@ -1,11 +1,20 @@
 from django.shortcuts import render, HttpResponse, HttpResponseRedirect
-from devfest.models import CreateAccountForm, UserAccount
+from devfest.models import CreateAccountForm, UserAccount, DrawInstance
 from django.contrib.auth.forms import *
 from django.contrib import auth
 
 import logging
 
 logger = logging.getLogger('root.' + __name__)
+
+def profile(request):
+    current_user = UserAccount.get(request.user)
+    drawings = DrawInstance.get_recent_images(current_user)
+    return render(request, 'account/profile.html', {
+        'username' : current_user.user.username,
+        'email' : current_user.user.email,
+        'drawings' : list(drawings)
+    })
 
 def new_account(request):
     return render(request, 'account/new_account.html')
