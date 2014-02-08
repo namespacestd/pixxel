@@ -7,7 +7,7 @@
         url = git@heroku.com:pixxel-devfest.git
         fetch = +refs/heads/*:refs/remotes/heroku/*
 [remote "github"]
-        url = https://github.com/namespacestd/devfest_mmaa.git
+        url = https://github.com/namespacestd/pixxel.git
         fetch = +refs/heads/*:refs/remotes/github/*
 [branch "master"]
         remote = github
