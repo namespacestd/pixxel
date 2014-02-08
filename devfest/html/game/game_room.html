@@ -101,7 +101,7 @@
                                                     {% endif %}
 
                                                     {% if all_submitted %}
-                                                        <input class="choose-drawing-button" class="drawing-submit" type="submit" name="{{drawing.username}}" value="Choose Drawing"></input>
+                                                        <input class="choose-drawing-button drawing-submit" type="submit" name="{{drawing.username}}" value="Choose Drawing"></input>
                                                     {% elif not drawing.drawing %}
                                                         <div class="drawing-pending"> Waiting for Submission... </div>
                                                     {% else %}
