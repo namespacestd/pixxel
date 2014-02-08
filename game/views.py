@@ -108,6 +108,12 @@ def start_game(request, room_name):
     return HttpResponseRedirect('/game/room/' + room_name)
 
 def join_game(request, room_name):
+    current_room = GameInstance.get(room_name)
+    if not current_room.is_public:
+        password = request.POST.get('room_password')
+        if current_room.password != password:
+           return HttpResponseRedirect('/game/room/' + room_name) 
+    
     join_game_helper(UserAccount.get(request.user), room_name)
     return HttpResponseRedirect('/game/room/' + room_name)
 

@@ -20,6 +20,10 @@
         {% if not game_instance.game_started and not already_in_game %}
             <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
                 {% csrf_token %}
+                {% if not game_instance.is_public %} 
+                    This room is private. Please enter the password.
+                    <input type="text" name="room_password" placeholder='Password' required></input>
+                {% endif %} 
                 <input type="submit" value="Join Room"> </input>
             </form>
         {% endif %}
