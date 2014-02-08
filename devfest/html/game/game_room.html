@@ -23,6 +23,14 @@
         <div id="game-right">
             <div id="game-info" class="centered">
                 <h1>» Players</h1>
+                <table id="playerlist">
+                    {% for user in userlist %}
+                        <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                    {% endfor %}
+                </table>
+                <div class="small-top-margin"></div>
+                <a class="button" href="/">Back to Home</a>
+                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
             </div>
             <div id="game-players"></div>
         </div>
@@ -53,22 +61,9 @@
         {% endif %}
         <div id="current_room_users">
             <div class="content_title"> Current Users </div>
-            {% if is_owner and game_startable and not game_over%}
-                <form action="/game/room/kick_player/{{room_name}}/" method="post">
-                    {% csrf_token %}
-            {% endif %}
-
-                {% for user in userlist %}
-                    <div class="game_entry"> {{ user.username }} ({{ user.score.score }}) </div>
-                    {% if user.username != game_instance.owner.user.username and not game_over%}
-                        <input type="checkbox" name="kick_{{user.username}}" value="{{user.username}}"></input>
-                    {% endif %}
-                {% endfor %}
-
-            {% if is_owner and game_startable and not game_over %}
-                    <input type="submit" value="Kick Players"></input>
-                </form>
-            {% endif %}
+            {% for user in userlist %}
+                <div class="game_entry"> {{ user.username }} ({{ user.score.score }}) </div>
+            {% endfor %}
         </div>
 
         <div>
@@ -104,7 +99,6 @@
                                                 {% else %}
                                                     Blank_image.png
                                                 {% endif %}
-
                                                 {% if all_submitted %}
                                                     <input type="submit" name="{{drawing.username}}" value="Choose this Drawing"></input>
                                                 {% endif %}

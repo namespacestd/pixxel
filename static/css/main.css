@@ -298,9 +298,9 @@ h1 {
 #game-left {
     float: left;
     background-color: blue;
-    width: 570px;
+    width: 580px;
     height: 500px;
-    margin: 0 15px;
+    margin-right: 20px;
 }
 #game-tools {
     background-color: red;
@@ -312,10 +312,19 @@ h1 {
     height: 500px;
 }
 #game-info {
-    background-color: green;
+    font-family: 'Open Sans';
+    color: #ccc;
+    font-size: 12px;
 }
-#game-players {
-    background-color: green;
+#playerlist {
+    margin: 5px auto 0;
+    width: 100%;
+    border: 1px solid #111;
+    background-color: rgba(120,120,120,0.1);
+}
+.playerlist-right {
+    width: 60px;
+    text-align: center;
 }
 
 /*===============
