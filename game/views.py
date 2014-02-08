@@ -38,7 +38,7 @@ def create_new_room(request):
     return render(request, 'game/game.html')
 
 def open_games(request):
-    open_games = GameInstance.objects.all()
+    open_games = GameInstance.objects.filter(game_started=False)
     return render(request, 'game/open_games.html', {
         'open_games': open_games
     })
