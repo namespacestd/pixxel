@@ -1,0 +1,15 @@
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "heroku"]
+        url = git@heroku.com:pixxel-devfest.git
+        fetch = +refs/heads/*:refs/remotes/heroku/*
+[remote "github"]
+        url = https://github.com/namespacestd/pixxel.git
+        fetch = +refs/heads/*:refs/remotes/github/*
+[branch "master"]
+        remote = github
+        merge = refs/heads/master
+~                                       
