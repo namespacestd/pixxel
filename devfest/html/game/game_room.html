@@ -10,62 +10,15 @@
 
 {% block content %}
     {% include 'main/header.html' %}
-    <div id="game-main">
-        <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
-            {% if game_instance.current_phrase %}
-                <span class="glow">{{game_instance.current_phrase}}</span>
-            {% else %}
-                <span class="glow">N/A</span>
-            {% endif %}
-        </div>
-        <div id="game-left">
-            <div id="game-tools"></div>
-        </div>
-        <div id="game-right">
-            <div id="game-info" class="centered">
-                <h1>» Players</h1>
-                <table id="playerlist">
-                    {% for user in userlist %}
-                        <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
-                    {% endfor %}
-                </table>
-                <div class="small-top-margin"></div>
-                <a class="button" href="/">Back to Home</a>
-                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
-            </div>
-            <div id="game-players"></div>
-        </div>
-        <div class="clear"></div>
-    </div>
 
     <div class="top-margin">
-        <div class="section_title"> Room: {{ room_name }} </div>
+        <!-- <div class="section_title"> Room: {{ room_name }} </div>
         <div class="section_title"> Current Judge: {{ game_instance.current_judge.user.username }} </div>
         <div class="section_title"> Is Public: {{game_instance.is_public}} </div>
         <div class="section_title"> Password: {{game_instance.password}} </div>
         <div class="section_title"> Current Phrase: {{game_instance.current_phrase}}</div>
         <div class="section_title"> Game Started: {{game_instance.game_started}}</div>
-        <div class="section_title"> Max Players: {{game_instance.max_players}}</div>
-        {% if open_slots %}
-            {% if not game_instance.game_started and not already_in_game %}
-                <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
-                    {% csrf_token %}
-                    {% if not game_instance.is_public %} 
-                        This room is private. Please enter the password.
-                        <input type="text" name="room_password" placeholder='Password' required></input>
-                    {% endif %} 
-                    <input type="submit" value="Join Room"> </input>
-                </form>
-            {% endif %}
-        {% elif not already_in_game %}
-            Sorry, max number of players in the room has been reached.
-        {% endif %}
-        <div id="current_room_users">
-            <div class="content_title"> Current Users </div>
-            {% for user in userlist %}
-                <div class="game_entry"> {{ user.username }} ({{ user.score.score }}) </div>
-            {% endfor %}
-        </div>
+        <div class="section_title"> Max Players: {{game_instance.max_players}}</div> -->
 
         <div>
             {% if previous_round_data %}
@@ -120,7 +73,35 @@
                                     Judge has not yet chosen a phrase.
                                 {% else %}
                                     {% if not user_drawing %}
-                                        Draw Here
+                                        
+                                        <div id="game-main">
+                                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+                                                {% if game_instance.current_phrase %}
+                                                    <span class="glow">{{game_instance.current_phrase}}</span>
+                                                {% else %}
+                                                    <span class="glow">N/A</span>
+                                                {% endif %}
+                                            </div>
+                                            <div id="game-left">
+                                                <div id="game-tools"></div>
+                                            </div>
+                                            <div id="game-right">
+                                                <div id="game-info" class="centered">
+                                                    <h1>» Players</h1>
+                                                    <table id="playerlist">
+                                                        {% for user in userlist %}
+                                                            <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                                                        {% endfor %}
+                                                    </table>
+                                                    <div class="small-top-margin"></div>
+                                                    <a class="button" href="/">Back to Home</a>
+                                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                                </div>
+                                                <div id="game-players"></div>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+
                                         <div id="red">Red</div>
                                         <div id="blue">Blue</div>
                                         <div id="clear">Clear</div>
@@ -147,17 +128,55 @@
                         {% endif %}
                     {% elif is_owner %}
                         {% if game_startable %}
-                            <a href="/game/start_game/{{room_name}}/" class='button'>Start Game</a>
+                            <div class="centered text">
+                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span></div>
+                                <h1>» Players</h1>
+                                    {% for user in userlist %}
+                                        {{ user.username }}<br>
+                                    {% endfor %}
+                                <a href="/game/start_game/{{room_name}}/" class="button small-top-margin">Start Game</a>
+                            </div>
                         {% else %}
-                            Waiting for more players...
+                            <div class="centered text">
+                                <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span></div>
+                                <h1>» Players</h1>
+                                    {% for user in userlist %}
+                                        {{ user.username }}<br>
+                                    {% endfor %}
+                                <div class="notice-waiting small-top-margin">Waiting for more players...</div>
+                                <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                            </div>
                         {% endif %}
                     {% else %}
-                        Waiting for owner to start game...
+                        <div class="centered text">
+                            <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span></div>
+                            <h1>» Players</h1>
+                                {% for user in userlist %}
+                                    {{ user.username }}<br>
+                                {% endfor %}
+                            <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
+                            {% if open_slots %}
+                                {% if already_in_game %}
+                                    <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                {% elif not game_instance.game_started and not already_in_game %}
+                                    <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
+                                        {% csrf_token %}
+                                        {% if not game_instance.is_public %} 
+                                            <div class="notice-waiting small-top-margin">This room is private. Please enter the password.</div>
+                                            <input type="text" name="room_password" placeholder='Password' required></input>
+                                        {% endif %} 
+                                        <div class="centered small-top-margin">
+                                            <input type="submit" class="button" value="Join Room">
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            {% elif not already_in_game %}
+                                <div class="notice-waiting small-top-margin">Sorry, max number of players in the room has been reached.</div>
+                            {% endif %}
+                        </div>
                     {% endif %}
                 {% endif %}
-                <!-- Leave Room -->
-                <br>
-                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                <!-- <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a> -->
             {% endif %}
         </div>
     </div>
