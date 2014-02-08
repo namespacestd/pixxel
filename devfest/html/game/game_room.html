@@ -17,15 +17,19 @@
         <div class="section_title"> Current Phrase: {{game_instance.current_phrase}}</div>
         <div class="section_title"> Game Started: {{game_instance.game_started}}</div>
         <div class="section_title"> Max Players: {{game_instance.max_players}}</div>
-        {% if not game_instance.game_started and not already_in_game %}
-            <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
-                {% csrf_token %}
-                {% if not game_instance.is_public %} 
-                    This room is private. Please enter the password.
-                    <input type="text" name="room_password" placeholder='Password' required></input>
-                {% endif %} 
-                <input type="submit" value="Join Room"> </input>
-            </form>
+        {% if open_slots %}
+            {% if not game_instance.game_started and not already_in_game %}
+                <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
+                    {% csrf_token %}
+                    {% if not game_instance.is_public %} 
+                        This room is private. Please enter the password.
+                        <input type="text" name="room_password" placeholder='Password' required></input>
+                    {% endif %} 
+                    <input type="submit" value="Join Room"> </input>
+                </form>
+            {% endif %}
+        {% elif not already_in_game %}
+            Sorry, max number of players in the room has been reached.
         {% endif %}
         <div id="current_room_users">
             <div class="content_title"> Current Users </div>
@@ -117,7 +121,7 @@
                     {% else %}
                         Waiting for more players...
                     {% endif %}
-                {% else %}
+                {% elif already_in_game %}
                     Waiting for owner to start game...
                 {% endif %}
 
