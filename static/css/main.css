@@ -506,6 +506,12 @@ h1 {
     font-size: 12px;
     color: #ccc;
 }
+.login-name {
+    font-family: 'Belgrano';
+    display: inline;
+    color: #ccc;
+    text-shadow: 1px 1px 3px black;
+}
 .glow {
     font-weight: bold;
     text-shadow: 1px 1px 3px black;
