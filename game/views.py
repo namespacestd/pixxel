@@ -93,6 +93,8 @@ def game_room(request, room_name):
 
             previous_result_data = drawings
 
+    user_scores = sorted(user_scores, key=lambda x: x['score'].score, reverse=True)
+
     for user in userlist:
         if user != current_room.current_judge:
             drawing = DrawInstance.get(user, current_room, current_room.current_round)
