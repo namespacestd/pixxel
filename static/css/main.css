@@ -356,7 +356,7 @@ h1 {
     height: 20px;
     width: 20px;
     border: 1px solid #111;
-    box-shadow: 0 0 2px black;
+    opacity: 0.9;
 }
 .color-choice:hover {
     cursor: pointer;
@@ -384,12 +384,14 @@ h1 {
 }
 #black {
     background-color: black;
+    box-shadow: 0 0 0px 2px black;
+    opacity: 1.0;
 }
 #grey {
     background-color: grey;
 }
 #white {
-    background-color: #eee;
+    background-color: white;
 }
 #thickness, #opacity {
     display: inline-block;
@@ -415,6 +417,7 @@ h1 {
 }
 #playerlist {
     margin: 5px auto 0;
+    padding: 5px 0;
     width: 100%;
     border: 1px solid #111;
     background-color: rgba(120,120,120,0.1);
