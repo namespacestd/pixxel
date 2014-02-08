@@ -1,5 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect
 from devfest.models import GameInstance, UserAccount, ScoreInstance, DrawInstance
+from django.core.files.base import ContentFile
+import re
+import base64
+import hashlib
+import time
 
 def new_game(request):
     return render(request, 'game/game.html')
@@ -114,7 +119,22 @@ def submit_drawing(request, room_name):
         current_room = GameInstance.get(room_name)
         round_number = current_room.current_round
 
-        user_drawing = request.FILES['drawn_image']
+        dataUrlPattern = re.compile('data:image/(png|jpeg);base64,(.*)$')
+        image_data = request.POST['image_data']
+        image_data = dataUrlPattern.match(image_data).group(2)
+
+        # If none or len 0, means illegal image data
+        if (image_data == None or len(image_data) == 0):
+            # PRINT ERROR MESSAGE HERE
+            pass
+
+        # Decode the 64 bit string into 32 bit
+        image_data = base64.b64decode(image_data)
+        hash = hashlib.sha1()
+        hash.update(str(time.time()))
+        user_drawing = ContentFile(image_data, request.user.username+'_'+hash.hexdigest()+'.png')
+
+        #user_drawing = request.FILES['drawn_image']
 
         drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge)
         drawing.save()
