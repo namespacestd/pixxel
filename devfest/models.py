@@ -142,6 +142,14 @@ class DrawInstance(models.Model):
             return None 
 
     @staticmethod
+    def get_all_for_game(game):
+        if game is None:
+            return None
+            
+        results = DrawInstance.objects.filter(game=game)
+        return results
+
+    @staticmethod
     def get_all_for_round(game, round_number):
         if game is None or round_number is None:
             return None

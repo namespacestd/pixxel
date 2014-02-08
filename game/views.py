@@ -47,8 +47,10 @@ def leave_room(request, room_name):
     current_room = GameInstance.get(room_name)
     current_user = UserAccount.get(request.user)
     remove_player(current_user, current_room)
+    drawings = DrawInstance.get_all_for_game(current_room)
+    userlist = current_room.users.all()
 
-    if (current_room.owner == current_user and not current_room.game_started):
+    if (current_room.owner == current_user and not current_room.game_started) or (len(userlist)==1 and len(drawings)==0):
         current_room.delete()
 
     return HttpResponseRedirect('/')
