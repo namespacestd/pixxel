@@ -364,8 +364,11 @@
             FB.login(function(){
                FB.api('/me/feed', 'post', 
                {
-                    message: "I just submitted this picture for the phrase \"{{game_instance.phrase}}\" for <a href=\"http://pixxel-devfest.herokuapp.com\">Pixxel</a>.",
-                    picture: "/{{user_submission}}"
+                    message : "I just submitted this picture for the phrase \"{{game_instance.phrase}}\" for Pixxel.",
+                    name : 'Pixxel - {{game_instance.phrase}}',
+                    link : 'http://pixxel-devfest.herokuapp.com/static/img/user_pictures/testaccount6_551426a0ebf476f833b638a1a88a5cb1cbb8c639.png',
+                    description : 'post description',
+                    picture : 'http://pixxel-devfest.herokuapp.com/static/img/user_pictures/testaccount6_551426a0ebf476f833b638a1a88a5cb1cbb8c639.png'
                });
            }, {scope: 'publish_actions'});
         });
