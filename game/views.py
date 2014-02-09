@@ -208,6 +208,11 @@ def judge_drawing(request, room_name):
         user_scores = ScoreInstance.get_all_for_game(game_room)
         draw_instance = DrawInstance.get(chosen_drawing, game_room, game_room.current_round)
 
+        all_drawings = DrawInstance.get_all_for_round(game_room, game_room.current_round)
+        for drawing in all_drawings:
+            draw_instance.was_round_winner = -1
+
+
         for user in user_scores:
             user.seen_previous_result = False
             user.save()
@@ -215,7 +220,7 @@ def judge_drawing(request, room_name):
         game_room.current_round+=1
         game_room.current_phrase=""
         game_room.save()
-        draw_instance.was_round_winner = True
+        draw_instance.was_round_winner = 1
         draw_instance.save()
 
         winner_score = ScoreInstance.get(chosen_drawing, game_room)

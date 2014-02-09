@@ -1,0 +1,35 @@
+
+{% extends "base_generic.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/main.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/lightbox.css" %}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+{% endblock %}
+
+{% block content %}
+    {% include 'main/header.html' %}
+    <div class="top-margin">
+        <div id="top-info"><span class="small">Game:</span> <span class="glow">{{room_name}}</span> | <span class="small">Judge:</span> <span class="glow">{{drawing.round_judge.user.username }}</span> | <span class="small">Phrase:</span>
+            <span class="glow">{{drawing.phrase}}</span>
+        </div>
+        <div class="centered"><a href="/{{drawing.picture}}" data-lightbox="user_drawing"><img class="submitted-picture" src="/{{drawing.picture}}"></img></a></div>
+        <div id="top-info"><span class="small">Result:</span>
+            <span class="glow">
+                {% if drawing.was_round_winner == 1 %}
+                    Winner
+                {% elif drawing.was_round_winner == -1 %}
+                    Loser
+                {% else %}
+                    N/A
+                {% endif %}
+            </span>
+        </div>
+    </div>
+   
+{% endblock %}
+
+{% block js %}
+    <script src="/static/js/lightbox-2.6.min.js"></script>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from game import views
+from game import views, public_views
 
 urlpatterns = patterns('',
     url(r'^new_game/', views.new_game, name='new_game'),
@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^leave_room/(?P<room_name>[\w\ !]+)/+$', views.leave_room, name='leave_room'),
     url(r'^start_game/(?P<room_name>[\w\ !]+)/+$', views.start_game, name='start_game'),
     url(r'^room/kick_player/(?P<room_name>[\w\ !]+)/+$', views.kick_player, name='kick_player'),
+    url(r'^public_picture/(?P<room_name>[\w\ !]+)/(?P<round_number>\d+)/(?P<player_name>[\w\ !]+)/+$', public_views.public_picture, name='public_picture'),
 )

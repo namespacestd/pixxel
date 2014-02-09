@@ -102,7 +102,7 @@ class DrawInstance(models.Model):
     picture = models.ImageField(upload_to="static/img/user_pictures/")
     game = models.ForeignKey(GameInstance)
     round_number = models.IntegerField()
-    was_round_winner = models.BooleanField(default=False)
+    was_round_winner = models.IntegerField(default=0)
     timestamp = models.TimeField()
     round_judge = models.ForeignKey(UserAccount,related_name='draw_instance_judge')
     phrase = models.CharField(max_length=50)
@@ -158,6 +158,18 @@ class DrawInstance(models.Model):
             
         results = DrawInstance.objects.filter(game=game, round_number=round_number)
         return results
+
+    @staticmethod
+    def get_for_user_game_round(user, game, round_number):
+        if game is None or round_number is None or user is None:
+            return None
+
+        results = DrawInstance.objects.filter(game=game, round_number=round_number, user=user)
+        try:
+            return results[0]
+
+        except IndexError:
+            return None
 
 
 class CreateAccountForm(forms.Form):
