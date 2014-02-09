@@ -71,6 +71,7 @@ def game_room(request, room_name):
     user_drawing = None
     num_submitted = 0
     is_owner = UserAccount.get(request.user) == current_room.owner
+    user_submission = DrawInstance.get(UserAccount.get(request.user), current_room, current_room.current_round)
 
     previous_result_data = None
 
@@ -119,7 +120,8 @@ def game_room(request, room_name):
         'open_slots' : current_room.max_players > len(userlist),
         'game_startable' : len(userlist) > 1,
         'is_owner' : is_owner,
-        'game_over' : current_room.current_round >= current_room.num_rounds
+        'game_over' : current_room.current_round >= current_room.num_rounds,
+        'user_submission' : user_submission
     })
 
 def start_game(request, room_name):
