@@ -366,9 +366,9 @@
                {
                     message : "I just submitted this picture for the phrase \"{{game_instance.current_phrase}}\" for Pixxel.",
                     name : 'Pixxel - {{game_instance.current_phrase}}',
-                    link : 'http://pixxel-devfest.herokuapp.com/static/img/user_pictures/testaccount4_8068c32e20393f76f19f6e1e8b596fbba1a2bd22.png',
+                    link : 'http://pixxel-devfest.herokuapp.com/game/public_picture/{{game_instance.game_room_name}}/{{game_instance/current_round}}/{{username}}/',
                     description : 'Pixxel is a multiplayer drawing game where you compete against your friends.',
-                    picture : 'http://pixxel-devfest.herokuapp.com/static/img/user_pictures/testaccount4_8068c32e20393f76f19f6e1e8b596fbba1a2bd22.png'
+                    picture : 'http://pixxel-devfest.herokuapp.com/{{user_submission.picture}}'
                });
            }, {scope: 'publish_actions'});
         });
