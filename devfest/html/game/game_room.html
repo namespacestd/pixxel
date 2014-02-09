@@ -31,7 +31,7 @@
                                 {% endif %}
                             </div>
                             <div id="game-left-judge">
-                                <form action="/game/judge_drawing/{{room_name}}/" method="post">
+                                <form action="/game/judge_drawing/{{room_name|urlencode}}/" method="post">
                                     {% csrf_token %}
                                     {% for drawing in previous_round_data %}
                                     <div class="user-drawing">
@@ -51,7 +51,7 @@
                                     {% endfor %}
                                 </form>
                                 <div class="clear"></div>
-                                <div class="centered smaller-top-margin"><a class="button" href="/game/next_round/{{room_name}}/">Go to Next Round</a></div>
+                                <div class="centered smaller-top-margin"><a class="button" href="/game/next_round/{{room_name|urlencode}}/">Go to Next Round</a></div>
                             </div>
                             <div id="game-right">
                                 <div id="game-info" class="centered">
@@ -63,7 +63,7 @@
                                     </table>
                                     <div class="small-top-margin"></div>
                                     <a class="button" href="/">Back to Home</a>
-                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                    <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                                 </div>
                                 <div id="game-players"></div>
                             </div>
@@ -108,7 +108,7 @@
                                         {% endif %}
                                     </div>
                                     <div id="game-left-judge">
-                                        <form action="/game/judge_drawing/{{room_name}}/" method="post">
+                                        <form action="/game/judge_drawing/{{room_name|urlencode}}/" method="post">
                                             {% csrf_token %}
                                             {% for drawing in user_drawings %}
                                                 <div class="user-drawing">
@@ -145,7 +145,7 @@
                                             </table>
                                             <div class="small-top-margin"></div>
                                             <a class="button" href="/">Back to Home</a>
-                                            <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                            <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                                         </div>
                                         <div id="game-players"></div>
                                     </div>
@@ -159,7 +159,7 @@
                                         <span class="glow">N/A</span>
                                     {% endif %}
                                 </div>
-                                <form id="submit_phrase" action="/game/judge_phrase/{{room_name}}/" method="post">
+                                <form id="submit_phrase" action="/game/judge_phrase/{{room_name|urlencode}}/" method="post">
                                     {% csrf_token %}
                                     <div class="notice-waiting small-top-margin">You are the judge.<br>Please submit the phrase.</div>
                                     <div class="centered small-top-margin"><input type="text" name="judge_phrase" placeholder="Enter Phrase Here"></input><br>
@@ -210,7 +210,7 @@
                                                 </div>
 
                                                 <div class="centered">
-                                                    <form id="submit-drawing-form" action="/game/submit_drawing/{{room_name}}/" method="POST">
+                                                    <form id="submit-drawing-form" action="/game/submit_drawing/{{room_name|urlencode}}/" method="POST">
                                                         {% csrf_token %}
                                                         <input type="hidden" name="image_data" id="image_data"></input>
                                                         <a class="button" id="restart">Restart</a>
@@ -229,13 +229,13 @@
                                                     </table>
                                                     <div class="small-top-margin"></div>
                                                     <a class="button" href="/">Back to Home</a>
-                                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                                    <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                                                 </div>
                                                 <div id="game-players"></div>
                                             </div>
                                             <div class="clear"></div>
                                         </div>
-                                                <!-- <form action="/game/submit_drawing/{{room_name}}/" method="post" enctype="multipart/form-data">
+                                                <!-- <form action="/game/submit_drawing/{{room_name|urlencode}}/" method="post" enctype="multipart/form-data">
                                                     {% csrf_token %}
                                                     <input name="drawn_image" type="file" required> </input>
                                                     <input type="submit" value="Submit"> </input>
@@ -262,8 +262,8 @@
                                     {% for user in userlist %}
                                         <span class="wtf">{{ user.username }}</span><br>
                                     {% endfor %}
-                                <a href="/game/start_game/{{room_name}}/" class="button small-top-margin">Start Game</a><br>
-                                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                <a href="/game/start_game/{{room_name|urlencode}}/" class="button small-top-margin">Start Game</a><br>
+                                <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                             </div>
                         {% else %}
                             <div class="centered text">
@@ -274,7 +274,7 @@
                                     {% endfor %}
                                 <div class="notice-waiting small-top-margin">Waiting for more players...</div>
                                 <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
-                                <a class="button small-top-margin" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                <a class="button small-top-margin" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                             </div>
                         {% endif %}
                     {% else %}
@@ -288,9 +288,9 @@
                                 {% if already_in_game %}
                                     <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
                                     <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
-                                    <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                    <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                                 {% elif not game_instance.game_started and not already_in_game %}
-                                    <form id="join_room_button" action="/game/room/join_game/{{room_name}}/" method="post">
+                                    <form id="join_room_button" action="/game/room/join_game/{{room_name|urlencode}}/" method="post">
                                         {% csrf_token %}
                                         {% if not game_instance.is_public %} 
                                             <div class="notice-waiting small-top-margin">This room is private. Please enter the password.</div>
@@ -308,12 +308,12 @@
                             {% elif already_in_game %}
                                 <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
                                 <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
-                                <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a>
+                                <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                             {% endif %}
                         </div>
                     {% endif %}
                 {% endif %}
-                <!-- <a class="button" href="/game/leave_room/{{room_name}}/">Leave Game</a> -->
+                <!-- <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a> -->
             {% endif %}
         </div>
     </div>
@@ -330,7 +330,7 @@
             e.preventDefault();
             $.ajax({
                 method: 'POST',
-                url: '/game/room/join_game/{{room_name}}/',
+                url: '/game/room/join_game/{{room_name|urlencode}}/',
                 data: $(this).serialize(),
                 success: function(data) {
                     if (data == 'Success') {

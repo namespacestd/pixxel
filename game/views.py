@@ -15,6 +15,8 @@ def create_new_room(request):
         game_name = request.POST.get('room_name')
         is_private = request.POST.get('room_password')
         num_rounds = request.POST.get('num_rounds')
+
+        print game_name
         
         if GameInstance.get(game_name):
             return render(request, 'game/game.html', { 'error' : 'already exists' })

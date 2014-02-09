@@ -64,8 +64,6 @@ class GameInstance(models.Model):
         result = urllib.unquote(name).decode('utf8')
         # Check if profile exists, and return it if it does
         results = GameInstance.objects.filter(game_room_name=result)
-        if len(results) == 0:
-            results = GameInstance.objects.filter()
         try:
             return results[0]
         except IndexError:
