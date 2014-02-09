@@ -83,7 +83,7 @@
                 <div id="games-list">
                     {% if completed_games %}
                         {% for game in completed_games %}
-                            <a href="/game/room/{{game.game_room_name}}/" class="games-list-game">{{game.game_room_name}}</a>
+                            <a href="/game/room/{{game.game_room_name}}/" class="games-list-game">{{game.game_room_name|urlencode}}</a>
                         {% endfor %}
                     {% endif %}
                 </div>

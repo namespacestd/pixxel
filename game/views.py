@@ -15,6 +15,8 @@ def create_new_room(request):
         game_name = request.POST.get('room_name')
         is_private = request.POST.get('room_password')
         num_rounds = request.POST.get('num_rounds')
+
+        print game_name
         
         if GameInstance.get(game_name):
             return render(request, 'game/game.html', { 'error' : 'already exists' })
@@ -132,6 +134,12 @@ def start_game(request, room_name):
 
 def join_game(request, room_name):
     current_room = GameInstance.get(room_name)
+    userlist = current_room.users.all()
+
+    if current_room.max_players <= len(userlist):
+        error_msg = "Sorry, the room is full."
+        return HttpResponse(error_msg)
+        
     if not current_room.is_public:
         password = request.POST.get('room_password')
         if current_room.password != password:

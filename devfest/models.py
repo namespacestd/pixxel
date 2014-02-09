@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django import forms
 from operator import itemgetter
+import urllib
 
 import logging
 
@@ -60,8 +61,9 @@ class GameInstance(models.Model):
         if name is None:
             return None
 
+        result = urllib.unquote(name).decode('utf8')
         # Check if profile exists, and return it if it does
-        results = GameInstance.objects.filter(game_room_name=name)
+        results = GameInstance.objects.filter(game_room_name=result)
         try:
             return results[0]
         except IndexError:
