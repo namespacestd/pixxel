@@ -243,6 +243,24 @@
                                         <div class="centered"><a href="/{{user_submission.picture}}" data-lightbox="user_submission"><img class="submitted-picture" src="/{{user_submission.picture}}"></img></a></div>
                                         <div class="notice-waiting small-top-margin">Your drawing has been submitted.<br>Waiting for judge to choose winner...</div>
                                         <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                        <div id="fb-root"></div>
+                                        <script>
+                                            window.fbAsyncInit = function() {
+                                                FB.init({
+                                                  appId      : '300035396810696',
+                                                  status     : true,
+                                                  xfbml      : true
+                                              });
+                                            };
+
+                                            (function(d, s, id){
+                                               var js, fjs = d.getElementsByTagName(s)[0];
+                                               if (d.getElementById(id)) {return;}
+                                               js = d.createElement(s); js.id = id;
+                                               js.src = "//connect.facebook.net/en_US/all.js";
+                                               fjs.parentNode.insertBefore(js, fjs);
+                                           }(document, 'script', 'facebook-jssdk'));
+                                        </script>
                                     {% endif %}
                                 {% endif %}
                             {% endif %}
