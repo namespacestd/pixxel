@@ -131,7 +131,7 @@ def game_room(request, room_name):
             'room_name' : room_name, 
             'userlist' : user_scores,
             'num_drawing' : len(userlist)-1,
-            'user_drawings' :  user_drawings,
+            'user_drawings' :  randomize_list(user_drawings),
             'already_in_game' : already_in_game,
             'is_current_judge' : current_judge,
             'user_drawing' : user_drawing,
@@ -144,6 +144,16 @@ def game_room(request, room_name):
             'user_submission' : user_submission
         })
     return HttpResponseRedirect('/')
+
+def randomize_list(lst):
+    list_copy = lst[:]
+    randomized = []
+    for count in range(0, lst):
+        random_index = random.randint(0, len(list_copy)-1)
+        randomized.append(list_copy[random_index])
+        list_copy.pop(random_index)
+    return randomized
+
 
 
 def start_game(request, room_name):
