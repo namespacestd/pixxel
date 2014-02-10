@@ -11,6 +11,24 @@
 {% block content %}
     {% include 'main/header.html' %}
 
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '300035396810696',
+              status     : true,
+              xfbml      : true
+          });
+        };
+
+        (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/all.js";
+         fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
+    </script>
     <div class="top-margin">
         <div>
             {% if previous_round_data %}
@@ -244,24 +262,6 @@
                                         <div class="notice-waiting small-top-margin">Your drawing has been submitted.<br>Waiting for judge to choose winner...</div>
                                         <div class="centered"><div class='button small-top-margin' id="facebook_share"> Share on Facebook </div></div>
                                         <div class="centered"><a id="refresh" class="button">Refresh</a></div>
-                                        <div id="fb-root"></div>
-                                        <script>
-                                            window.fbAsyncInit = function() {
-                                                FB.init({
-                                                  appId      : '300035396810696',
-                                                  status     : true,
-                                                  xfbml      : true
-                                              });
-                                            };
-
-                                            (function(d, s, id){
-                                               var js, fjs = d.getElementsByTagName(s)[0];
-                                               if (d.getElementById(id)) {return;}
-                                               js = d.createElement(s); js.id = id;
-                                               js.src = "//connect.facebook.net/en_US/all.js";
-                                               fjs.parentNode.insertBefore(js, fjs);
-                                           }(document, 'script', 'facebook-jssdk'));
-                                        </script>
                                         {% endif %}
                                 {% endif %}
                             {% endif %}
@@ -275,6 +275,7 @@
                                         <span class="wtf">{{ user.username }}</span><br>
                                     {% endfor %}
                                 <a href="/game/start_game/{{room_name|urlencode}}/" class="button small-top-margin">Start Game</a><br>
+                                <div class="centered"><div id="fb-invite" class="button">Invite Friends on Facebook</div></div>
                                 <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                             </div>
                         {% else %}
@@ -286,7 +287,8 @@
                                     {% endfor %}
                                 <div class="notice-waiting small-top-margin">Waiting for more players...</div>
                                 <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
-                                <a class="button small-top-margin" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
+                                <div class="centered"><div id="fb-invite" class="button">Invite Friends on Facebook</div></div>
+                                <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                             </div>
                         {% endif %}
                     {% else %}
@@ -300,6 +302,7 @@
                                 {% if already_in_game %}
                                     <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
                                     <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+                                    <div class="centered"><div id="fb-invite2" class="button">Invite Friends on Facebook</div></div>
                                     <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
                                 {% elif not game_instance.game_started and not already_in_game %}
                                     <form id="join_room_button" action="/game/room/join_game/{{room_name|urlencode}}/" method="post">
@@ -359,6 +362,28 @@
         });
         $('#refresh').click(function() {
             location.reload();
+        });
+        $("#fb-invite").click(function() {
+            FB.login(function(){
+               FB.api('/me/feed', 'post', 
+               {
+                    message : "Join my game room \"{{game_instance.game_room_name}}\" on Pixxel!",
+                    name : 'Pixxel',
+                    link : 'http://pixxel-devfest.herokuapp.com/',
+                    description : 'Pixxel is a multiplayer drawing game where you compete against your friends.',
+               });
+           }, {scope: 'publish_actions'});
+        });
+        $("#fb-invite2").click(function() {
+            FB.login(function(){
+               FB.api('/me/feed', 'post', 
+               {
+                    message : "Come play with on Pixxel in game room \"{{game_instance.game_room_name}}\"!",
+                    name : 'Pixxel',
+                    link : 'http://pixxel-devfest.herokuapp.com/',
+                    description : 'Pixxel is a multiplayer drawing game where you compete against your friends.',
+               });
+           }, {scope: 'publish_actions'});
         });
         $("#facebook_share").click(function() {
             FB.login(function(){
