@@ -4,9 +4,14 @@
             <a class="logo" href="/">PixxeL</a>
         </div>
         <div id="header-right">
-            <div class="login-name"> {{username}} | </div>
-            <!--<a class="button" href="/account/profile/">Profile</a>-->
-            <a class="button" href="/account/logout/">Log Out</a>
+            {% if is_authenticated %}
+                <div class="login-name"> {{username}} | </div>
+                <!--<a class="button" href="/account/profile/">Profile</a>-->
+                <a class="button" href="/account/logout/">Log Out</a>
+            {% else %}
+                <a class="button" href="/">Log In</a>
+                <a class="button" href="/">Sign Up</a>
+            {% endif %}
         </div>
         <div class="clear"></div>
     </div>

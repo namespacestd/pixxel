@@ -17,52 +17,59 @@ S3_BUCKET = "pixxel-devfest"
 base_image_url = "https://s3-us-west-1.amazonaws.com/pixxel-devfest/";
 
 def new_game(request):
-    return render(request, 'game/game.html')
+    if request.user.is_active and request.user.is_authenticated():
+        return render(request, 'game/game.html')
+    return HttpResponseRedirect('/')
 
 def create_new_room(request):
-    if request.method == 'POST':
-        game_name = request.POST.get('room_name')
-        is_private = request.POST.get('room_password')
-        num_rounds = request.POST.get('num_rounds')
+    if request.user.is_active and request.user.is_authenticated():
+        if request.method == 'POST':
+            game_name = request.POST.get('room_name')
+            is_private = request.POST.get('room_password')
+            num_rounds = request.POST.get('num_rounds')
 
-        print game_name
-        
-        if GameInstance.get(game_name):
-            return render(request, 'game/game.html', { 'error' : 'already exists' })
+            print game_name
+            
+            if GameInstance.get(game_name):
+                return render(request, 'game/game.html', { 'error' : 'already exists' })
 
-        new_game = GameInstance()
-        new_game.game_room_name = game_name
-        current_user = UserAccount.get(request.user)
-        new_game.current_judge = current_user
-        new_game.owner = current_user
+            new_game = GameInstance()
+            new_game.game_room_name = game_name
+            current_user = UserAccount.get(request.user)
+            new_game.current_judge = current_user
+            new_game.owner = current_user
 
-        new_game.num_rounds = int(num_rounds)
+            new_game.num_rounds = int(num_rounds)
 
-        if is_private:
-            new_game.is_public = False
-            new_game.password = is_private
+            if is_private:
+                new_game.is_public = False
+                new_game.password = is_private
 
-        new_game.save()
-        join_game_helper(current_user, game_name)
-        return HttpResponseRedirect('/game/room/'+game_name)
+            new_game.save()
+            join_game_helper(current_user, game_name)
+            return HttpResponseRedirect('/game/room/'+game_name)
     
-    return render(request, 'game/game.html')
+        return render(request, 'game/game.html')
+    return HttpResponseRedirect('/')
 
 def open_games(request):
-    open_games = GameInstance.objects.filter(game_started=False)
-    return render(request, 'game/open_games.html', {
-        'open_games': open_games
-    })
+    if request.user.is_active and request.user.is_authenticated():
+        open_games = GameInstance.objects.filter(game_started=False)
+        return render(request, 'game/open_games.html', {
+            'open_games': open_games
+        })
+    return HttpResponseRedirect('/')
 
 def leave_room(request, room_name):
-    current_room = GameInstance.get(room_name)
-    current_user = UserAccount.get(request.user)
-    remove_player(current_user, current_room)
-    drawings = DrawInstance.get_all_for_game(current_room)
-    userlist = current_room.users.all()
+    if request.user.is_active and request.user.is_authenticated() and request.method == 'POST':
+        current_room = GameInstance.get(room_name)
+        current_user = UserAccount.get(request.user)
+        remove_player(current_user, current_room)
+        drawings = DrawInstance.get_all_for_game(current_room)
+        userlist = current_room.users.all()
 
-    if (current_room.owner == current_user and not current_room.game_started) or (len(userlist)==1 and len(drawings)==0):
-        current_room.delete()
+        if (current_room.owner == current_user and not current_room.game_started) or (len(userlist)==1 and len(drawings)==0):
+            current_room.delete()
 
     return HttpResponseRedirect('/')
 
@@ -72,91 +79,98 @@ def remove_player(user, room):
     room.users.remove(user)
 
 def game_room(request, room_name):
-    try:
-        current_room = GameInstance.get(room_name)
-        userlist = current_room.users.all()
-    except:
-        return HttpResponseRedirect('/')
-    already_in_game = None
-    current_judge = None
-    user_drawing = None
-    num_submitted = 0
-    is_owner = UserAccount.get(request.user) == current_room.owner
-    user_submission = DrawInstance.get(UserAccount.get(request.user), current_room, current_room.current_round)
+    if request.user.is_active and request.user.is_authenticated():
+        try:
+            current_room = GameInstance.get(room_name)
+            userlist = current_room.users.all()
+        except:
+            return HttpResponseRedirect('/')
+        already_in_game = None
+        current_judge = None
+        user_drawing = None
+        num_submitted = 0
+        is_owner = UserAccount.get(request.user) == current_room.owner
+        user_submission = DrawInstance.get(UserAccount.get(request.user), current_room, current_room.current_round)
 
-    previous_result_data = None
+        previous_result_data = None
 
-    if request.user:
-        already_in_game = UserAccount.get(request.user) in userlist
+        if request.user:
+            already_in_game = UserAccount.get(request.user) in userlist
 
-    user_scores = []
-    user_drawings = []
+        user_scores = []
+        user_drawings = []
 
-    for user in userlist:
-        score = ScoreInstance.get(user, current_room)
-        user_scores.append(({'username' : user.user.username, 'score': score})) 
-        
-        if user.user == request.user and user == current_room.current_judge:
-            current_judge = user
+        for user in userlist:
+            score = ScoreInstance.get(user, current_room)
+            user_scores.append(({'username' : user.user.username, 'score': score})) 
+            
+            if user.user == request.user and user == current_room.current_judge:
+                current_judge = user
 
-        if user.user == request.user and score.seen_previous_result == False:
-            last_round_number = current_room.current_round-1
-            drawings = DrawInstance.get_all_for_round(current_room, last_round_number)
+            if user.user == request.user and score.seen_previous_result == False:
+                last_round_number = current_room.current_round-1
+                drawings = DrawInstance.get_all_for_round(current_room, last_round_number)
 
-            previous_result_data = drawings
+                previous_result_data = drawings
 
-    user_scores = sorted(user_scores, key=lambda x: x['score'].score, reverse=True)
+        user_scores = sorted(user_scores, key=lambda x: x['score'].score, reverse=True)
 
-    for user in userlist:
-        if user != current_room.current_judge:
-            drawing = DrawInstance.get(user, current_room, current_room.current_round)
-            user_drawings.append({'username': user.user.username, 'drawing': drawing})
+        for user in userlist:
+            if user != current_room.current_judge:
+                drawing = DrawInstance.get(user, current_room, current_room.current_round)
+                user_drawings.append({'username': user.user.username, 'drawing': drawing})
 
-            if request.user == user.user and drawing != None:
-                user_drawing = drawing
-            if drawing != None:
-                num_submitted+=1
+                if request.user == user.user and drawing != None:
+                    user_drawing = drawing
+                if drawing != None:
+                    num_submitted+=1
 
-    return render(request, 'game/game_room.html', { 
-        'game_instance' : current_room,
-        'room_name' : room_name, 
-        'userlist' : user_scores,
-        'num_drawing' : len(userlist)-1,
-        'user_drawings' :  user_drawings,
-        'already_in_game' : already_in_game,
-        'is_current_judge' : current_judge,
-        'user_drawing' : user_drawing,
-        'all_submitted' : num_submitted == len(userlist)-1,
-        'previous_round_data' : previous_result_data,
-        'open_slots' : current_room.max_players > len(userlist),
-        'game_startable' : len(userlist) > 1,
-        'is_owner' : is_owner,
-        'game_over' : current_room.current_round >= current_room.num_rounds,
-        'user_submission' : user_submission
-    })
+        return render(request, 'game/game_room.html', { 
+            'game_instance' : current_room,
+            'room_name' : room_name, 
+            'userlist' : user_scores,
+            'num_drawing' : len(userlist)-1,
+            'user_drawings' :  user_drawings,
+            'already_in_game' : already_in_game,
+            'is_current_judge' : current_judge,
+            'user_drawing' : user_drawing,
+            'all_submitted' : num_submitted == len(userlist)-1,
+            'previous_round_data' : previous_result_data,
+            'open_slots' : current_room.max_players > len(userlist),
+            'game_startable' : len(userlist) > 1,
+            'is_owner' : is_owner,
+            'game_over' : current_room.current_round >= current_room.num_rounds,
+            'user_submission' : user_submission
+        })
+    return HttpResponseRedirect('/')
+
 
 def start_game(request, room_name):
-    current_room = GameInstance.get(room_name)
-    current_room.game_started = True
-    current_room.save()
-    return HttpResponseRedirect('/game/room/' + room_name)
+    if request.user.is_active and request.user.is_authenticated():
+        current_room = GameInstance.get(room_name)
+        current_room.game_started = True
+        current_room.save()
+        return HttpResponseRedirect('/game/room/' + room_name)
+    return HttpResponseRedirect('/')
 
 def join_game(request, room_name):
-    current_room = GameInstance.get(room_name)
-    userlist = current_room.users.all()
+    if request.user.is_active and request.user.is_authenticated():
+        current_room = GameInstance.get(room_name)
+        userlist = current_room.users.all()
 
-    if current_room.max_players <= len(userlist):
-        error_msg = "Sorry, the room is full."
-        return HttpResponse(error_msg)
-        
-    if not current_room.is_public:
-        password = request.POST.get('room_password')
-        if current_room.password != password:
-            error_msg = "Incorrect room password."
+        if current_room.max_players <= len(userlist):
+            error_msg = "Sorry, the room is full."
             return HttpResponse(error_msg)
-    
-    join_game_helper(UserAccount.get(request.user), room_name)
-    return HttpResponse('Success')
+            
+        if not current_room.is_public:
+            password = request.POST.get('room_password')
+            if current_room.password != password:
+                error_msg = "Incorrect room password."
+                return HttpResponse(error_msg)
+        
+        join_game_helper(UserAccount.get(request.user), room_name)
+        return HttpResponse('Success')
+    return HttpResponseRedirect('/')
 
 def join_game_helper(user_account, room_name):
     current_user = user_account
@@ -170,14 +184,16 @@ def join_game_helper(user_account, room_name):
     user_score.save()
 
 def judge_phrase(request, room_name):
-    current_room = GameInstance.get(room_name)
-    phrase = request.POST['judge_phrase']
-    current_room.current_phrase = phrase
-    current_room.save()
-    return HttpResponseRedirect('/game/room/' + room_name)
+    if request.user.is_active and request.user.is_authenticated():
+        current_room = GameInstance.get(room_name)
+        phrase = request.POST['judge_phrase']
+        current_room.current_phrase = phrase
+        current_room.save()
+        return HttpResponseRedirect('/game/room/' + room_name)
+    return HttpResponseRedirect('/')
 
 def submit_drawing(request, room_name):
-    if request.method == 'POST':
+    if request.user.is_active and request.user.is_authenticated() and request.method == 'POST':
         current_user = UserAccount.get(request.user)
         current_room = GameInstance.get(room_name)
         round_number = current_room.current_round
@@ -208,10 +224,11 @@ def submit_drawing(request, room_name):
         drawing = DrawInstance(user = current_user, picture=base_image_url+k.key, game=current_room, round_number=round_number, round_judge=current_room.current_judge, phrase=phrase, timestamp=timestamp)
         drawing.save()
         
-    return HttpResponseRedirect('/game/room/' + room_name)
+        return HttpResponseRedirect('/game/room/' + room_name)
+    return HttpResponseRedirect('/')
 
 def judge_drawing(request, room_name):
-    if request.method == 'POST':
+    if request.user.is_active and request.user.is_authenticated() and request.method == 'POST':
         chosen_drawing = None
         for key, value in request.POST.items():
             if value == 'Choose Drawing':
@@ -242,16 +259,19 @@ def judge_drawing(request, room_name):
 
         choose_next_judge(game_room)
 
-    return HttpResponseRedirect('/game/room/' + room_name)
+        return HttpResponseRedirect('/game/room/' + room_name)
+    return HttpResponseRedirect('/')
 
 def next_round(request, room_name):
-    current_user = UserAccount.get(request.user)
-    current_room = GameInstance.get(room_name)
+    if request.user.is_active and request.user.is_authenticated():
+        current_user = UserAccount.get(request.user)
+        current_room = GameInstance.get(room_name)
 
-    score = ScoreInstance.get(current_user, current_room)
-    score.seen_previous_result = True
-    score.save()
-    return HttpResponseRedirect('/game/room/' + room_name)
+        score = ScoreInstance.get(current_user, current_room)
+        score.seen_previous_result = True
+        score.save()
+        return HttpResponseRedirect('/game/room/' + room_name)
+    return HttpResponseRedirect('/')
 
 def choose_next_judge(game_instance):
     current_judge = game_instance.current_judge
@@ -271,9 +291,11 @@ def choose_next_judge(game_instance):
     game_instance.save()
 
 def kick_player(request, room_name):
-    for element in request.POST:
-        if 'kick' in element:
-            player_name = request.POST.get(element)
-            remove_player(UserAccount.find(player_name), GameInstance.get(room_name))
-            
-    return HttpResponseRedirect('/game/room/' + room_name)
+    if request.user.is_active and request.user.is_authenticated():
+        for element in request.POST:
+            if 'kick' in element:
+                player_name = request.POST.get(element)
+                remove_player(UserAccount.find(player_name), GameInstance.get(room_name))
+                
+        return HttpResponseRedirect('/game/room/' + room_name)
+    return HttpResponseRedirect('/')
