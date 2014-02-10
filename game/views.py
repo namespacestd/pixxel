@@ -148,7 +148,7 @@ def game_room(request, room_name):
 def randomize_list(lst):
     list_copy = lst[:]
     randomized = []
-    for count in range(0, lst):
+    for count in range(0, len(lst)):
         random_index = random.randint(0, len(list_copy)-1)
         randomized.append(list_copy[random_index])
         list_copy.pop(random_index)
