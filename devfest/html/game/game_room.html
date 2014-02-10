@@ -389,7 +389,7 @@
             FB.login(function(){
                FB.api('/me/feed', 'post', 
                {
-                    message : "I just submitted this picture for the phrase \"{{game_instance.current_phrase}}\" for Pixxel.",
+                    message : "I just submitted this picture for the phrase \"{{game_instance.current_phrase}}\" on Pixxel.",
                     name : 'Pixxel - {{game_instance.current_phrase}}',
                     link : 'http://pixxel-devfest.herokuapp.com/game/public_picture/{{game_instance.game_room_name}}/{{game_instance.current_round}}/{{username}}/',
                     description : 'Pixxel is a multiplayer drawing game where you compete against your friends.',
