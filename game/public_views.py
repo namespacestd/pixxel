@@ -11,6 +11,10 @@ def public_picture(request, round_number, room_name, player_name):
     target_user = UserAccount.find(player_name)
     target_game = GameInstance.get(room_name)
     draw_instance = DrawInstance.get_for_user_game_round(target_user, target_game, round_number)
+
+    if target_user == None or target_game == None or draw_instance == None:
+        return HttpResponseRedirect('/')
+    
     return render(request, "game/public_picture.html", {
         'round_number' : round_number,
         'room_name' : room_name,
