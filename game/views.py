@@ -6,6 +6,7 @@ import base64
 import hashlib
 import time
 from datetime import datetime
+import random
 
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
@@ -130,7 +131,7 @@ def game_room(request, room_name):
             'room_name' : room_name, 
             'userlist' : user_scores,
             'num_drawing' : len(userlist)-1,
-            'user_drawings' :  user_drawings,
+            'user_drawings' :  random.shuffle(user_drawings),
             'already_in_game' : already_in_game,
             'is_current_judge' : current_judge,
             'user_drawing' : user_drawing,
