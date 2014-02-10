@@ -8,13 +8,14 @@ import time
 from datetime import datetime
 import random
 
+import os
 from boto.s3.connection import S3Connection
 from boto.s3.key import Key
 from StringIO import StringIO
 
-AWS_ACCESS_KEY = "AKIAJSOLSVJLDS7RBSFQ"
-AWS_SECRET_KEY = "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"
-S3_BUCKET = "pixxel-devfest"
+AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+S3_BUCKET = os.environ.get('S3_BUCKET')
 base_image_url = "https://s3-us-west-1.amazonaws.com/pixxel-devfest/";
 
 def new_game(request):
