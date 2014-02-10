@@ -14,7 +14,7 @@
         <div id="top-info"><span class="small">Game:</span> <span class="glow">{{room_name}}</span> | <span class="small">Judge:</span> <span class="glow">{{drawing.round_judge.user.username }}</span> | <span class="small">Phrase:</span>
             <span class="glow">{{drawing.phrase}}</span>
         </div>
-        <div class="centered"><a href="/{{drawing.picture}}" data-lightbox="user_drawing"><img class="submitted-picture" src="/{{drawing.picture}}"></img></a></div>
+        <div class="centered"><a href="{{drawing.picture}}" data-lightbox="user_drawing"><img class="submitted-picture" src="{{drawing.picture}}"></img></a></div>
         <div id="top-info"><span class="small">Result:</span>
             <span class="glow">
                 {% if drawing.was_round_winner == 1 %}

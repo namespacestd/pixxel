@@ -368,7 +368,7 @@
                     name : 'Pixxel - {{game_instance.current_phrase}}',
                     link : 'http://pixxel-devfest.herokuapp.com/game/public_picture/{{game_instance.game_room_name}}/{{game_instance.current_round}}/{{username}}/',
                     description : 'Pixxel is a multiplayer drawing game where you compete against your friends.',
-                    picture : 'http://pixxel-devfest.herokuapp.com/{{user_submission.picture}}'
+                    picture : '{{user_submission.picture}}'
                });
            }, {scope: 'publish_actions'});
         });
