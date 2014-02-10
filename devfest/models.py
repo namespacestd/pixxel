@@ -99,7 +99,7 @@ class ScoreInstance(models.Model):
 
 class DrawInstance(models.Model):
     user = models.ForeignKey(UserAccount, related_name='draw_instance_user')
-    picture = models.ImageField(upload_to="static/img/user_pictures/")
+    picture = models.URLField()
     game = models.ForeignKey(GameInstance)
     round_number = models.IntegerField()
     was_round_winner = models.IntegerField(default=0)

@@ -7,6 +7,15 @@ import hashlib
 import time
 from datetime import datetime
 
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
+from StringIO import StringIO
+
+AWS_ACCESS_KEY = "AKIAJSOLSVJLDS7RBSFQ"
+AWS_SECRET_KEY = "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"
+S3_BUCKET = "pixxel-devfest"
+base_image_url = "https://s3-us-west-1.amazonaws.com/pixxel-devfest/";
+
 def new_game(request):
     return render(request, 'game/game.html')
 
@@ -188,11 +197,15 @@ def submit_drawing(request, room_name):
         image_data = base64.b64decode(image_data)
         hash = hashlib.sha1()
         hash.update(str(time.time()))
-        user_drawing = ContentFile(image_data, request.user.username+'_'+hash.hexdigest()+'.png')
 
-        #user_drawing = request.FILES['drawn_image']
+        conn = S3Connection(AWS_ACCESS_KEY, AWS_SECRET_KEY)
+        bucket = conn.get_bucket(S3_BUCKET)
+        k = Key(bucket)
+        k.key = request.user.username+'_'+hash.hexdigest()+'.png'
+        k.set_contents_from_file(StringIO(image_data))
 
-        drawing = DrawInstance(user = current_user, picture=user_drawing, game=current_room, round_number=round_number, round_judge=current_room.current_judge, phrase=phrase, timestamp=timestamp)
+
+        drawing = DrawInstance(user = current_user, picture=base_image_url+k.key, game=current_room, round_number=round_number, round_judge=current_room.current_judge, phrase=phrase, timestamp=timestamp)
         drawing.save()
         
     return HttpResponseRedirect('/game/room/' + room_name)
