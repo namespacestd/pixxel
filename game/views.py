@@ -130,7 +130,7 @@ def game_room(request, room_name):
                     num_submitted+=1
 
         if previous_result_data:
-            user_drawings = previous_round_data
+            user_drawings = previous_result_data
 
         return render(request, 'game/game_room.html', { 
             'game_instance' : current_room,
