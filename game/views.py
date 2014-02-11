@@ -15,7 +15,7 @@ from StringIO import StringIO
 
 AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-S3_BUCKET = os.environ.get('S3_BUCKET')
+S3_BUCKET = os.environ.get('S3_BUCKET_NAME')
 base_image_url = "https://s3-us-west-1.amazonaws.com/pixxel-devfest/";
 
 def new_game(request):
