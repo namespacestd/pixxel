@@ -3,6 +3,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf import settings
 from .utilities import AppInitialization
 
+from devfest import views
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -13,6 +15,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', 'home.views.index', name='index'),    # Root url for application
+    url(r'^test', views.test, name='test'),
     url(r'^game/', include('game.urls')),
     url(r'^account/', include('account.urls')),
     # Static content goes under the '/site_media/' directory

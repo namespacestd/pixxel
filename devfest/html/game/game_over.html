@@ -1,0 +1,23 @@
+<div id="game-main">
+    <div id="top-info">
+    </div>
+    <div id="game-over">
+        <div id="game-info">
+            <div class="centered"><h1>» Final Scores </h1></div>
+            <table id="playerlist">
+                {% for user in userlist %}
+                <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                {% endfor %}
+            </table>
+            <div class="small-top-margin"></div>
+            <div class="centered">
+                <a class="button" href="/">Back to Home</a>
+            </div>
+        </div>
+        <div id="game-players"></div>
+    </div>
+    <div id="game-right">
+        
+    </div>
+    <div class="clear"></div>
+</div>  

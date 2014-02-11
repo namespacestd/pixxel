@@ -136,11 +136,13 @@ def game_room(request, room_name):
             'game_instance' : current_room,
             'room_name' : room_name, 
             'userlist' : user_scores,
+            'num_players' : len(userlist), 
             'num_drawing' : len(userlist)-1,
             'user_drawings' :  randomize_list(user_drawings),
             'already_in_game' : already_in_game,
             'is_current_judge' : current_judge,
             'user_drawing' : user_drawing,
+            'num_submitted' : num_submitted,
             'all_submitted' : num_submitted == len(userlist)-1,
             'previous_round_data' : previous_result_data,
             'open_slots' : current_room.max_players > len(userlist),
@@ -326,3 +328,49 @@ def kick_player(request, room_name):
                 
         return HttpResponseRedirect('/game/room/' + room_name)
     return HttpResponseRedirect('/')
+
+def waiting_for_phrase(request, room_name):
+    if request.user.is_active and request.user.is_authenticated():
+        current_room = GameInstance.get(room_name)
+        
+        print current_room.current_phrase
+        if current_room.current_phrase:
+            return HttpResponse('Success')
+    return HttpResponse('No Change')
+
+def waiting_for_judge_pick(request, room_name):
+    if request.user.is_active and request.user.is_authenticated():
+        current_room = GameInstance.get(room_name)
+        current_user = UserAccount.get(request.user)
+        score_instance = ScoreInstance.get(current_user, current_room)
+
+        if not score_instance.seen_previous_result:
+            return HttpResponse('Success')
+    return HttpResponse('No Change')
+
+def waiting_for_submissions(request, room_name, submissions):
+    if request.user.is_active and request.user.is_authenticated():
+        current_room = GameInstance.get(room_name)
+        userlist = current_room.users.all()
+        num_submitted = 0
+
+        for user in userlist:
+            if user != current_room.current_judge:
+                drawing = DrawInstance.get(user, current_room, current_room.current_round)
+
+                if drawing != None:
+                    num_submitted+=1
+
+        if int(submissions) != int(num_submitted):
+            return HttpResponse('Success')
+    return HttpResponse('No Change')
+
+def waiting_for_more_players(request, room_name, num_players):
+    if request.user.is_active and request.user.is_authenticated():
+        current_room = GameInstance.get(room_name)
+        userlist = current_room.users.all()
+
+        if int(len(userlist)) != int(num_players) or current_room.game_started:
+            return HttpResponse('Success')
+    return HttpResponse('No Change')
+

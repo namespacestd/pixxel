@@ -15,4 +15,9 @@ urlpatterns = patterns('',
     url(r'^start_game/(?P<room_name>[\w\ !~=-]+)/+$', views.start_game, name='start_game'),
     url(r'^room/kick_player/(?P<room_name>[\w\ !~=-]+)/+$', views.kick_player, name='kick_player'),
     url(r'^public_picture/(?P<room_name>[\w\ !~=-]+)/(?P<round_number>\d+)/(?P<player_name>[\w\ !]+)/+$', public_views.public_picture, name='public_picture'),
+
+    url(r'^waiting_for_phrase/(?P<room_name>[\w\ !~=-]+)/+$', views.waiting_for_phrase, name='waiting_for_phrase'),
+    url(r'^waiting_for_judge_pick/(?P<room_name>[\w\ !~=-]+)/+$', views.waiting_for_judge_pick, name='waiting_for_judge_pick'),
+    url(r'^waiting_for_submissions/(?P<room_name>[\w\ !~=-]+)/(?P<submissions>\d+)/+$', views.waiting_for_submissions, name='waiting_for_submissions'),
+    url(r'^waiting_for_more_players/(?P<room_name>[\w\ !~=-]+)/(?P<num_players>\d+)/+$', views.waiting_for_more_players, name='waiting_for_more_players'),
 )

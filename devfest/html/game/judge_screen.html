@@ -56,7 +56,7 @@
         <div class="clear"></div>
         {% if previous_round_data %}
             <div class="centered smaller-top-margin"><a class="button" href="/game/next_round/{{room_name|urlencode}}/">Go to Next Round</a></div>
-        {% else %}
+        {% elif not all_submitted %}
             <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
         {% endif %}
     </div>
