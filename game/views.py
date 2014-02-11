@@ -115,6 +115,8 @@ def game_room(request, room_name):
 
                 previous_result_data = drawings
 
+
+
         user_scores = sorted(user_scores, key=lambda x: x['score'].score, reverse=True)
 
         for user in userlist:
@@ -126,6 +128,9 @@ def game_room(request, room_name):
                     user_drawing = drawing
                 if drawing != None:
                     num_submitted+=1
+
+        if previous_result_data:
+            user_drawings = previous_round_data
 
         return render(request, 'game/game_room.html', { 
             'game_instance' : current_room,
@@ -142,9 +147,19 @@ def game_room(request, room_name):
             'game_startable' : len(userlist) > 1,
             'is_owner' : is_owner,
             'game_over' : current_room.current_round >= current_room.num_rounds,
-            'user_submission' : user_submission
+            'user_submission' : user_submission,
+            'round_winner' : find_winner(previous_result_data)
         })
     return HttpResponseRedirect('/')
+
+def find_winner(drawings):
+    if drawings == None:
+        return None
+
+    for drawing in drawings:
+        if drawing.was_round_winner == 1:
+            return drawing
+    return None
 
 def randomize_list(lst):
     list_copy = lst[:]

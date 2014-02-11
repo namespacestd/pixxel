@@ -1,0 +1,80 @@
+<div id="game-main">
+    <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Current Judge:</span> <span class="glow">{{ game_instance.current_judge.user.username }}</span> | <span class="small">Current Phrase:</span>
+    {% if game_instance.current_phrase %}
+        <span class="glow">{{game_instance.current_phrase}}</span>
+    {% elif previous_round_data %}
+        <span class="glow">{{round_winner.phrase}}</span>
+    {% else %}
+        <span class="glow">N/A</span>
+    {% endif %}
+</div>
+
+{% if not game_instance.current_phrase and not previous_round_data %}
+    <form id="submit_phrase" action="/game/judge_phrase/{{room_name|urlencode}}/" method="post">
+        {% csrf_token %}
+        <div class="notice-waiting small-top-margin">You are the judge.<br>Please submit the phrase.</div>
+        <div class="centered small-top-margin">
+            <input type="text" name="judge_phrase" placeholder="Enter Phrase Here"></input><br>
+            <input type="submit" class="button" value="Submit"></input>
+        </div>
+    </form>
+{% else %}
+    <div id="game-left-judge">
+        <form action="/game/judge_drawing/{{room_name|urlencode}}/" method="post">
+            {% csrf_token %}
+            {% for drawing in user_drawings %}
+                <div class="user-drawing">
+                    <div class="drawing-user"> 
+                        {% if previous_round_data %}
+                            {{ drawing.user.user.username }}
+                        {% endif %} 
+                    </div>
+                    {% if drawing.drawing %}
+                        <a href="{{drawing.drawing.picture}}" data-lightbox="user_drawing"><img class="drawing-thumbnail" src="{{drawing.drawing.picture}}"></img></a>
+                    {% elif previous_round_data %}
+                        <a href="{{drawing.picture}}" data-lightbox="user_drawing"><img class="drawing-thumbnail" src="{{drawing.picture}}"></img></a>
+                    {% else %}
+                        <div class="drawing-thumbnail"></div>
+                    {% endif %}
+
+                    {% if is_current_judge and all_submitted %}
+                        <input class="choose-drawing-button drawing-submit" type="submit" name="{{drawing.username}}" value="Choose Drawing"></input>
+                    {% elif previous_round_data %}
+                        {% if drawing.was_round_winner == 1 %}
+                            <div class="drawing-pending drawing-submitted winner"> Winner </div>
+                        {% else %}   
+                            <div class="drawing-pending drawing-submitted loser"> Loser </div>                             
+                        {% endif %}
+                    {% elif not drawing.drawing %}
+                        <div class="drawing-pending"> Waiting for Submission... </div>
+                    {% elif is_current_judge %}
+                        <div class="drawing-pending drawing-submitted"> Submitted </div>       
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </form>
+        <div class="clear"></div>
+        {% if previous_round_data %}
+            <div class="centered smaller-top-margin"><a class="button" href="/game/next_round/{{room_name|urlencode}}/">Go to Next Round</a></div>
+        {% else %}
+            <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+        {% endif %}
+    </div>
+                    
+    <div id="game-right">
+        <div id="game-info" class="centered">
+            <h1>» Players</h1>
+            <table id="playerlist">
+                {% for user in userlist %}
+                    <tr><td>{{ user.username }}</td> <td class="playerlist-right">{{ user.score.score }}</td></tr>
+                {% endfor %}
+            </table>
+            <div class="small-top-margin"></div>
+                <a class="button" href="/">Back to Home</a>
+                <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
+            </div>
+            <div id="game-players"></div>
+        </div>
+        <div class="clear"></div>
+{% endif %}
+</div>

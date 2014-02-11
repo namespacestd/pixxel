@@ -1,0 +1,42 @@
+<div class="centered text">
+    <div id="top-info"><span class="small">Game:</span> <span class="glow">{{ room_name }}</span> | <span class="small">Host:</span> <span class="glow">{{game_instance.owner.user.username}}</span></div>
+    <h1>» Players</h1>
+    {% for user in userlist %}
+        <span class="wtf">{{ user.username }}</span><br>
+    {% endfor %}
+
+    {% if is_owner %}
+        {% if game_startable %}                            
+            <a href="/game/start_game/{{room_name|urlencode}}/" class="button small-top-margin">Start Game</a><br>
+        {% else %}
+            <div class="notice-waiting small-top-margin">Waiting for more players...</div>
+            <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+        {% endif %}
+            <div class="centered"><div id="fb-invite" class="button">Invite Friends on Facebook</div></div>
+            <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
+    {% else %}
+        {% if already_in_game %}
+            <div class="notice-waiting small-top-margin">Waiting for host to start game...</div>
+            <div class="centered"><a id="refresh" class="button small-top-margin">Refresh</a></div>
+            {% if open_slots %}
+                <div class="centered"><div id="fb-invite2" class="button">Invite Friends on Facebook</div></div>
+            {% endif %}
+            <a class="button" href="/game/leave_room/{{room_name|urlencode}}/">Leave Game</a>
+        {% else %}
+            {% if open_slots %}
+                <form id="join_room_button" action="/game/room/join_game/{{room_name|urlencode}}/" method="post">
+                    {% csrf_token %}
+                    {% if not game_instance.is_public %} 
+                        <div class="notice-waiting small-top-margin">This room is private. Please enter the password.</div>
+                        <input type="text" name="room_password" placeholder='Password' required></input>
+                        <div class="error"></div>
+                    {% endif %} 
+                    <div class="centered small-top-margin"><input type="submit" class="button" value="Join Room"></div>
+                </form>
+            {% else %}
+                <div class="notice-waiting small-top-margin">Sorry, max number of players in the room has been reached.</div>
+                <a class="button small-top-margin" href="/">Back to Home</a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+</div>
